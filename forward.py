@@ -52,18 +52,27 @@ bot = TelegramClient('bot', api_id, api_hash).start(bot_token=bot_token)
 
 @bot.on(events.NewMessage(pattern="^/start$"))
 async def start(event):
+    if not is_sudo(event):
+        await event.respond("You are not authorized to use this Bot. Create your own.")
+        return
     replied_user = await event.client(GetFullUserRequest(event.sender_id))
     firstname = replied_user.user.first_name
     await event.respond(message=f"**Hello, {firstname}, I Am Batch Forwarder Bot.** \n**Using me you can forward all the files in a channel to anothor easily** \n**USE AT OWN RISK !!!!! ACCOUNT MAY GET BAN**"
                      )
 @bot.on(events.NewMessage(pattern=r'/count'))
 async def handler(event):
+    if not is_sudo(event):
+        await event.respond("You are not authorized to use this Bot. Create your own.")
+        return
     await event.respond(f"You have send {MessageCount} messages")
     print(f"You have send {MessageCount} messages")
 
 
 @bot.on(events.NewMessage(pattern=r'/reset'))
 async def handler(event):
+    if not is_sudo(event):
+        await event.respond("You are not authorized to use this Bot. Create your own.")
+        return
     global MessageCount
     MessageCount=0
     await event.respond("Message count has been reset to 0")
@@ -71,10 +80,16 @@ async def handler(event):
 
 @bot.on(events.NewMessage(pattern=r'/help'))
 async def handler(event):
+    if not is_sudo(event):
+        await event.respond("You are not authorized to use this Bot. Create your own.")
+        return
     await event.respond(help_msg)
 
 @bot.on(events.NewMessage(pattern=r'/restart'))
 async def handler(event):
+    if not is_sudo(event):
+        await event.respond("You are not authorized to use this Bot. Create your own.")
+        return
     try:
         await event.respond('Updated the Script.')
         await event.respond('Restarted')
@@ -93,6 +108,9 @@ async def handler(event):
 
 @bot.on(events.NewMessage(pattern=r'/join (.*)'))
 async def handler(event):
+    if not is_sudo(event):
+        await event.respond("You are not authorized to use this Bot. Create your own.")
+        return
     link = event.pattern_match.group(1)
     type = ''
     if link:
@@ -120,7 +138,11 @@ async def handler(event):
         return
 
 
-
+async def is_sudo(event):
+    if str(event.sender_id) in sudo_users:
+        return True
+    else:
+        return False
 
 with TelegramClient(StringSession(string), api_id, api_hash) as client:
 
@@ -129,6 +151,9 @@ with TelegramClient(StringSession(string), api_id, api_hash) as client:
 
     @bot.on(events.NewMessage(pattern=r'/fdoc (.*) (.*)'))
     async def handler(event):
+        if not is_sudo(event):
+        await event.respond("You are not authorized to use this Bot. Create your own.")
+        return
         await event.reply("Forwaring all messages")
         fromchat = int(event.pattern_match.group(1))
         tochat = int(event.pattern_match.group(2))
