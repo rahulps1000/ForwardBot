@@ -17,14 +17,18 @@ api_hash = environ.get("API_HASH")
 MessageCount = 0
 help_msg = """
 The Commands in the bot are:
+
 **Command :** .fdoc channel_id
 **Usage : ** Forwards all documents from the given channel to the chat where the command is executed.
 **Command :** .count
 **Usage : ** Returns the Total message sent using the bot.
 **Command :** .reset
 **Usage : ** Resets the message count to 0.
+**Command :** .restart
+**Usage : ** Updates and Restarts the Plugin
 **Command :** .help
 **Usage : ** Get the help of this bot.
+
 Bot is created by @lal_bakthan
 """
 
@@ -86,7 +90,7 @@ with TelegramClient(StringSession(string), api_id, api_hash) as client:
     async def handler(event):
       await event.edit(help_msg)
 
-    @client.on(events.NewMessage(pattern=r'.r'))
+    @client.on(events.NewMessage(pattern=r'.restart'))
     async def handler(event):
       await event.edit('Updating Script')
       client.disconnect()
