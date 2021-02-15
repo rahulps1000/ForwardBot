@@ -94,13 +94,13 @@ async def handler(event):
             type = 'public'
         if type == 'private':
             try:
-                updates = await client(ImportChatInviteRequest(chann))
+                updates = await client(ImportChatInviteRequest(chann.group(1)))
                 await event.respond("Successfully joined the Channel")
             except Exception as e:
                 await event.respond(e)
         if type == 'public':
             try:
-                updates = await client(ImportChatInviteRequest(chann))
+                updates = await client(ImportChatInviteRequest(chann.group(1)))
                 await event.respond("Successfully joined the Channel")
             except Exception as e:
                 await event.respond(e)
