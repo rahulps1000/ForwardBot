@@ -52,11 +52,11 @@ bot = TelegramClient('bot', api_id, api_hash).start(bot_token=bot_token)
 async def start(event):
     replied_user = await event.client(GetFullUserRequest(event.sender_id))
     firstname = replied_user.user.first_name
-    await event.reply(message=f"**Hello, {firstname}, I Am Batch Forwarder Bot.** \n**Using me you can forward all the files in a channel to anothor easily** \n**USE AT OWN RISK !!!!! ACCOUNT MAY GET BAN**"
+    await event.respond(message=f"**Hello, {firstname}, I Am Batch Forwarder Bot.** \n**Using me you can forward all the files in a channel to anothor easily** \n**USE AT OWN RISK !!!!! ACCOUNT MAY GET BAN**"
                      )
 @bot.on(events.NewMessage(pattern=r'/count'))
 async def handler(event):
-    await event.reply(f"You have send {MessageCount} messages")
+    await event.respond(f"You have send {MessageCount} messages")
     print(f"You have send {MessageCount} messages")
 
 
@@ -64,17 +64,18 @@ async def handler(event):
 async def handler(event):
     global MessageCount
     MessageCount=0
-    await event.reply("Message count has been reset to 0")
+    await event.respond("Message count has been reset to 0")
     print("Message count has been reset to 0")
 
 @bot.on(events.NewMessage(pattern=r'/help'))
 async def handler(event):
-    await event.reply(help_msg)
+    await event.respond(help_msg)
 
 @bot.on(events.NewMessage(pattern=r'/restart'))
 async def handler(event):
     try:
-        await event.reply('Updating Script')
+        await event.respond('Updated the Script.')
+        await event.respond('Restarted')
         client.disconnect()
         os.system("git pull")
         os.execl(sys.executable, sys.executable, *sys.argv)
@@ -92,6 +93,7 @@ async def handler(event):
         else:
             chann = re.search(r"t.me.(.*)", link)
             type = 'public'
+            await event.respond(chann.group(1))
         if type == 'private':
             try:
                 updates = await client(ImportChatInviteRequest(chann.group(1)))
@@ -106,7 +108,6 @@ async def handler(event):
                 await event.respond("Successfully joined the Channel")
             except:
                 await event.respond("Wrong URL")
-                await event.respond(chann.group(1))
     else:
         return
 
