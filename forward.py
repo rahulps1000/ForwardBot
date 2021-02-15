@@ -5,19 +5,20 @@ from os import environ
 import sys
 import asyncio
 from telethon.sessions import StringSession
+from telethon import Button
+from telethon.tl.functions.users import GetFullUserRequest
+
 import logging
 logging.basicConfig(format='[%(levelname) 5s/%(asctime)s] %(name)s: %(message)s',
-                    level=logging.WARNING)
+                    level=logging.DEBUG)
 
-string = int(environ.get("STRING"))
-api_id = environ.get("API_ID")
+api_id = int(environ.get("API_ID"))
 api_hash = environ.get("API_HASH")
-
+bot_token = environ.get("TOKEN")
 
 MessageCount = 0
 help_msg = """
 The Commands in the bot are:
-
 **Command :** .fdoc channel_id
 **Usage : ** Forwards all documents from the given channel to the chat where the command is executed.
 **Command :** .count
@@ -28,9 +29,45 @@ The Commands in the bot are:
 **Usage : ** Updates and Restarts the Plugin
 **Command :** .help
 **Usage : ** Get the help of this bot.
-
 Bot is created by @lal_bakthan
 """
+
+
+
+bot = TelegramClient('bot', api_id, api_hash).start(bot_token=bot_token)
+
+@bot.on(events.NewMessage(pattern="^/start$"))
+async def start(event):
+    replied_user = await event.client(GetFullUserRequest(event.sender_id))
+    firstname = replied_user.user.first_name
+    await event.reply(message=f"**Hello, {firstname}, I Am Batch Forwarder Bot.** \n**Using me you can forward all the files in a channel to anothor easily** \n**USE AT OWN RISK !!!!! ACCOUNT MAY GET BAN**"
+                     )
+@bot.on(events.NewMessage(pattern=r'/count'))
+async def handler(event):
+    await event.reply(f"You have send {MessageCount} messages")
+    print(f"You have send {MessageCount} messages")
+
+
+@bot.on(events.NewMessage(pattern=r'/reset'))
+async def handler(event):
+    global MessageCount
+    MessageCount=0
+    await event.reply("Message count has been reset to 0")
+    print("Message count has been reset to 0")
+
+@bot.on(events.NewMessage(pattern=r'/help'))
+async def handler(event):
+    await event.reply(help_msg)
+
+@bot.on(events.NewMessage(pattern=r'/restart'))
+async def handler(event):
+    try:
+        await event.reply('Updating Script')
+        client.disconnect()
+        os.system("git pull")
+        os.execl(sys.executable, sys.executable, *sys.argv)
+    except:
+        pass
 
 
 with TelegramClient(StringSession(string), api_id, api_hash) as client:
@@ -38,9 +75,9 @@ with TelegramClient(StringSession(string), api_id, api_hash) as client:
     client.send_message('me', 'Running....')
     print("Running....")
 
-    @client.on(events.NewMessage(pattern=r'.fdoc (.*) (.*)'))
+    @bot.on(events.NewMessage(pattern=r'/fdoc (.*) (.*)'))
     async def handler(event):
-        await event.edit("Forwaring all messages")
+        await event.reply("Forwaring all messages")
         fromchat = int(event.pattern_match.group(1))
         tochat = int(event.pattern_match.group(2))
         count = 4500
@@ -74,29 +111,6 @@ with TelegramClient(StringSession(string), api_id, api_hash) as client:
         await event.delete()
         print("Finished")
 
-    @client.on(events.NewMessage(pattern=r'.count'))
-    async def handler(event):
-      await event.edit(f"You have send {MessageCount} messages")
-      print(f"You have send {MessageCount} messages")
-
-    @client.on(events.NewMessage(pattern=r'.reset'))
-    async def handler(event):
-      global MessageCount
-      MessageCount=0
-      await event.edit("Message count has been reset to 0")
-      print("Message count has been reset to 0")
-
-    @client.on(events.NewMessage(pattern=r'.help'))
-    async def handler(event):
-      await event.edit(help_msg)
-
-    @client.on(events.NewMessage(pattern=r'.restart'))
-    async def handler(event):
-      await event.edit('Updating Script')
-      client.disconnect()
-      os.system("git pull")
-      os.execl(sys.executable, sys.executable, *sys.argv)
-      
-
+    
 
     client.run_until_disconnected()
