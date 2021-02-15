@@ -81,7 +81,7 @@ async def handler(event):
 
 @bot.on(events.NewMessage(pattern=r'/help'))
 async def handler(event):
-    if not is_sudo(event):
+    await if not is_sudo(event):
         await event.respond("You are not authorized to use this Bot. Create your own.")
         return
     await event.respond(help_msg)
@@ -140,7 +140,7 @@ async def handler(event):
 
 
 async def is_sudo(event):
-    for user_id in sudo_users:
+    async for user_id in sudo_users:
         if event.sender_id == int(user_id):
             return True
     return False
