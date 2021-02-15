@@ -106,6 +106,7 @@ async def handler(event):
                 await event.respond("Successfully joined the Channel")
             except:
                 await event.respond("Wrong URL")
+                await event.respond(chann.group(1))
     else:
         return
 
