@@ -24,7 +24,7 @@ api_id = int(environ.get("API_ID"))
 api_hash = environ.get("API_HASH")
 bot_token = environ.get("TOKEN")
 string = environ.get("STRING")
-sudo_users = environ.get("SUDO_USERS"
+sudo_users = environ.get("SUDO_USERS")
 
 MessageCount = 0
 help_msg = """
