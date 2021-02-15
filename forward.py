@@ -40,11 +40,11 @@ bot = TelegramClient('bot', api_id, api_hash).start(bot_token=bot_token)
 async def start(event):
     replied_user = await event.client(GetFullUserRequest(event.sender_id))
     firstname = replied_user.user.first_name
-    await event.reply(message=f"**Hello, {firstname}, I Am Batch Forwarder Bot.** \n**Using me you can forward all the files in a channel to anothor easily** \n**USE AT OWN RISK !!!!! ACCOUNT MAY GET BAN**"
+    await event.respond(message=f"**Hello, {firstname}, I Am Batch Forwarder Bot.** \n**Using me you can forward all the files in a channel to anothor easily** \n**USE AT OWN RISK !!!!! ACCOUNT MAY GET BAN**"
                      )
 @bot.on(events.NewMessage(pattern=r'/count'))
 async def handler(event):
-    await event.reply(f"You have send {MessageCount} messages")
+    await event.respond(f"You have send {MessageCount} messages")
     print(f"You have send {MessageCount} messages")
 
 
@@ -52,17 +52,17 @@ async def handler(event):
 async def handler(event):
     global MessageCount
     MessageCount=0
-    await event.reply("Message count has been reset to 0")
+    await event.respond("Message count has been reset to 0")
     print("Message count has been reset to 0")
 
 @bot.on(events.NewMessage(pattern=r'/help'))
 async def handler(event):
-    await event.reply(help_msg)
+    await event.respond(help_msg)
 
 @bot.on(events.NewMessage(pattern=r'/restart'))
 async def handler(event):
     try:
-        await event.reply('Updating Script')
+        await event.respond('Updating Script')
         client.disconnect()
         os.system("git pull")
         os.execl(sys.executable, sys.executable, *sys.argv)
@@ -77,7 +77,7 @@ with TelegramClient(StringSession(string), api_id, api_hash) as client:
 
     @bot.on(events.NewMessage(pattern=r'/fdoc (.*) (.*)'))
     async def handler(event):
-        await event.reply("Forwaring all messages")
+        await event.respond("Forwaring all documents")
         fromchat = int(event.pattern_match.group(1))
         tochat = int(event.pattern_match.group(2))
         count = 4500
@@ -89,7 +89,7 @@ with TelegramClient(StringSession(string), api_id, api_hash) as client:
                 if mcount:
                     if message.document and not message.sticker :
                         try:
-                            await bot.send_file(tochat, message.document)
+                            await client.send_file(tochat, message.document)
                             await asyncio.sleep(2)
                             mcount -= 1
                             count -= 1
