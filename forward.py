@@ -38,11 +38,11 @@ with TelegramClient(StringSession(string), api_id, api_hash) as client:
     client.send_message('me', 'Running....')
     print("Running....")
 
-    @client.on(events.NewMessage(pattern=r'.fdoc (.*)'))
+    @client.on(events.NewMessage(pattern=r'.fdoc (.*) (.*)'))
     async def handler(event):
         await event.edit("Forwaring all messages")
         fromchat = int(event.pattern_match.group(1))
-        tochat = await event.get_input_chat()
+        tochat = int(event.pattern_match.group(2))
         count = 4500
         mcount = 1000
         global MessageCount
