@@ -89,7 +89,7 @@ with TelegramClient(StringSession(string), api_id, api_hash) as client:
                 if mcount:
                     if message.document and not message.sticker :
                         try:
-                            await client.send_file(tochat, message.document)
+                            await bot.send_file(tochat, message.document)
                             await asyncio.sleep(2)
                             mcount -= 1
                             count -= 1
