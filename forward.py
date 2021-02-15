@@ -153,8 +153,8 @@ with TelegramClient(StringSession(string), api_id, api_hash) as client:
     @bot.on(events.NewMessage(pattern=r'/fdoc (.*) (.*)'))
     async def handler(event):
         if not is_sudo(event):
-        await event.respond("You are not authorized to use this Bot. Create your own.")
-        return
+          await event.respond("You are not authorized to use this Bot. Create your own.")
+          return
         await event.reply("Forwaring all messages")
         fromchat = int(event.pattern_match.group(1))
         tochat = int(event.pattern_match.group(2))
