@@ -10,7 +10,7 @@ from telethon.tl.functions.users import GetFullUserRequest
 
 import logging
 logging.basicConfig(format='[%(levelname) 5s/%(asctime)s] %(name)s: %(message)s',
-                    level=logging.DEBUG)
+                    level=logging.INFO)
 
 api_id = int(environ.get("API_ID"))
 api_hash = environ.get("API_HASH")
