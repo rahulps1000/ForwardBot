@@ -24,7 +24,8 @@ api_id = int(environ.get("API_ID"))
 api_hash = environ.get("API_HASH")
 bot_token = environ.get("TOKEN")
 string = environ.get("STRING")
-sudo_users = environ.get("SUDO_USERS")
+sudo_vars = environ.get("SUDO_USERS")
+sudo_users = sudo_vars.split()
 
 MessageCount = 0
 help_msg = """
@@ -137,11 +138,12 @@ async def handler(event):
     else:
         return
 
-def is_sudo(event):
-    if str(event.sender_id) in sudo_users:
-        return True
-    else:
-        return False
+
+async def is_sudo(event):
+    for user_id in sudo_users:
+        if event.sender_id == int(user_id):
+            return True
+    return False
 
 with TelegramClient(StringSession(string), api_id, api_hash) as client:
 
