@@ -7,23 +7,14 @@ import asyncio
 from telethon.sessions import StringSession
 from telethon import Button
 from telethon.tl.functions.users import GetFullUserRequest
+from telethon.tl.functions.messages import ImportChatInviteRequest
+from telethon.tl.functions.channels import JoinChannelRequest
+from telethon import errors
 
 import logging
 logging.basicConfig(format='[%(levelname) 5s/%(asctime)s] %(name)s: %(message)s',
                     level=logging.INFO)
 
-api_id = int(environ.get("API_ID"))from telethon.sync import TelegramClient, events
-import re
-import os
-from os import environ
-import sys
-import asyncio
-from telethon.sessions import StringSession
-from telethon import Button
-from telethon.tl.functions.users import GetFullUserRequest
-from telethon.tl.functions.messages import ImportChatInviteRequest
-from telethon.tl.functions.channels import JoinChannelRequest
-from telethon import errors
 
 import logging
 logging.basicConfig(format='[%(levelname) 5s/%(asctime)s] %(name)s: %(message)s',
@@ -32,7 +23,7 @@ logging.basicConfig(format='[%(levelname) 5s/%(asctime)s] %(name)s: %(message)s'
 api_id = int(environ.get("API_ID"))
 api_hash = environ.get("API_HASH")
 bot_token = environ.get("TOKEN")
-
+string = environ.get("STRING")
 MessageCount = 0
 help_msg = """
 The Commands in the bot are:
