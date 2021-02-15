@@ -52,7 +52,7 @@ bot = TelegramClient('bot', api_id, api_hash).start(bot_token=bot_token)
 
 @bot.on(events.NewMessage(pattern="^/start$"))
 async def start(event):
-    if not is_sudo(event):
+    if not await is_sudo(event):
         await event.respond("You are not authorized to use this Bot. Create your own.")
         return
     replied_user = await event.client(GetFullUserRequest(event.sender_id))
@@ -61,7 +61,7 @@ async def start(event):
                      )
 @bot.on(events.NewMessage(pattern=r'/count'))
 async def handler(event):
-    if not is_sudo(event):
+    if not await is_sudo(event):
         await event.respond("You are not authorized to use this Bot. Create your own.")
         return
     await event.respond(f"You have send {MessageCount} messages")
@@ -70,7 +70,7 @@ async def handler(event):
 
 @bot.on(events.NewMessage(pattern=r'/reset'))
 async def handler(event):
-    if not is_sudo(event):
+    if not await is_sudo(event):
         await event.respond("You are not authorized to use this Bot. Create your own.")
         return
     global MessageCount
@@ -80,14 +80,14 @@ async def handler(event):
 
 @bot.on(events.NewMessage(pattern=r'/help'))
 async def handler(event):
-    if not is_sudo(event):
+    if not await is_sudo(event):
         await event.respond("You are not authorized to use this Bot. Create your own.")
         return
     await event.respond(help_msg)
 
 @bot.on(events.NewMessage(pattern=r'/restart'))
 async def handler(event):
-    if not is_sudo(event):
+    if not await is_sudo(event):
         await event.respond("You are not authorized to use this Bot. Create your own.")
         return
     try:
@@ -108,7 +108,7 @@ async def handler(event):
 
 @bot.on(events.NewMessage(pattern=r'/join (.*)'))
 async def handler(event):
-    if not is_sudo(event):
+    if not await is_sudo(event):
         await event.respond("You are not authorized to use this Bot. Create your own.")
         return
     link = event.pattern_match.group(1)
@@ -151,7 +151,7 @@ with TelegramClient(StringSession(string), api_id, api_hash) as client:
 
     @bot.on(events.NewMessage(pattern=r'/fdoc (.*) (.*)'))
     async def handler(event):
-        if not is_sudo(event):
+        if not await is_sudo(event):
           await event.respond("You are not authorized to use this Bot. Create your own.")
           return
         await event.reply("Forwaring all messages")
