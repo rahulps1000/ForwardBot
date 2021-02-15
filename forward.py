@@ -15,6 +15,7 @@ logging.basicConfig(format='[%(levelname) 5s/%(asctime)s] %(name)s: %(message)s'
 api_id = int(environ.get("API_ID"))
 api_hash = environ.get("API_HASH")
 bot_token = environ.get("TOKEN")
+string = envirin.get("STRING")
 
 MessageCount = 0
 help_msg = """
