@@ -87,10 +87,10 @@ async def handler(event):
     type = ''
     if link:
         if 'joinchat' in link:
-            entity = x = re.search(".joinchat.(.*)", link)
+            entity = x = re.search(r".joinchat.(.*)", link)
             type = 'private'
         else:
-            entity = x = re.search("t.me.(.*)", link)
+            entity = x = re.search(r"t.me.(.*)", link)
             type = 'public'
         if type == 'private':
             try:
