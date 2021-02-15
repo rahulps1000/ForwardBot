@@ -24,8 +24,7 @@ api_id = int(environ.get("API_ID"))
 api_hash = environ.get("API_HASH")
 bot_token = environ.get("TOKEN")
 string = environ.get("STRING")
-sudo_vars = environ.get("SUDO_USERS")
-sudo_users = sudo_vars.split()
+sudo_users = environ.get("SUDO_USERS")
 
 MessageCount = 0
 help_msg = """
@@ -81,7 +80,7 @@ async def handler(event):
 
 @bot.on(events.NewMessage(pattern=r'/help'))
 async def handler(event):
-    await if not is_sudo(event):
+    if not is_sudo(event):
         await event.respond("You are not authorized to use this Bot. Create your own.")
         return
     await event.respond(help_msg)
@@ -140,10 +139,10 @@ async def handler(event):
 
 
 async def is_sudo(event):
-    async for user_id in sudo_users:
-        if event.sender_id == int(user_id):
-            return True
-    return False
+    if str(event.sender_id) in sudo_users:
+        return True
+    else:
+        return False
 
 with TelegramClient(StringSession(string), api_id, api_hash) as client:
 
