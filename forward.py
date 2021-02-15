@@ -87,25 +87,23 @@ async def handler(event):
     type = ''
     if link:
         if 'joinchat' in link:
-            entity = x = re.search("/joinchat/(.*)", link)
+            entity = x = re.search(".joinchat.(.*)", link)
             type = 'private'
         else:
-            entity = x = re.search("t.me/(.*)", link)
+            entity = x = re.search("t.me.(.*)", link)
             type = 'public'
         if type == 'private':
             try:
                 updates = await client(ImportChatInviteRequest(entity))
                 await event.respond("Successfully joined the Channel")
-            except errors.UserAlreadyParticipantError:
-                await event.respond("You have already joined the Channel")
-            except errors.InviteHashExpiredError:
-                await event.respond("Wrong URL")
+            except Exception as e:
+                await event.respond(e)
         if type == 'public':
             try:
                 updates = await client(ImportChatInviteRequest(entity))
                 await event.respond("Successfully joined the Channel")
-            except:
-                await event.respond("Wrong URL")
+            except Exception as e:
+                await event.respond(e)
     else:
         return
 
