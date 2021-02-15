@@ -87,20 +87,20 @@ async def handler(event):
     type = ''
     if link:
         if 'joinchat' in link:
-            entity = x = re.search(r".joinchat.(.*)", link)
+            chann = re.search(r".joinchat.(.*)", link)
             type = 'private'
         else:
-            entity = x = re.search(r"t.me.(.*)", link)
+            chann = re.search(r"t.me.(.*)", link)
             type = 'public'
         if type == 'private':
             try:
-                updates = await client(ImportChatInviteRequest(entity))
+                updates = await client(ImportChatInviteRequest(chann))
                 await event.respond("Successfully joined the Channel")
             except Exception as e:
                 await event.respond(e)
         if type == 'public':
             try:
-                updates = await client(ImportChatInviteRequest(entity))
+                updates = await client(ImportChatInviteRequest(chann))
                 await event.respond("Successfully joined the Channel")
             except Exception as e:
                 await event.respond(e)
