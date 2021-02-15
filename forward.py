@@ -137,8 +137,7 @@ async def handler(event):
     else:
         return
 
-
-async def is_sudo(event):
+def is_sudo(event):
     if str(event.sender_id) in sudo_users:
         return True
     else:
