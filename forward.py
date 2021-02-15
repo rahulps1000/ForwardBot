@@ -96,14 +96,16 @@ async def handler(event):
             try:
                 updates = await client(ImportChatInviteRequest(chann.group(1)))
                 await event.respond("Successfully joined the Channel")
-            except Exception as e:
-                await event.respond(e)
+            except errors.UserAlreadyParticipantError:
+                await event.respond("You have already joined the Channel")
+            except errors.InviteHashExpiredError:
+                await event.respond("Wrong URL")
         if type == 'public':
             try:
                 updates = await client(ImportChatInviteRequest(chann.group(1)))
                 await event.respond("Successfully joined the Channel")
-            except Exception as e:
-                await event.respond(e)
+            except:
+                await event.respond("Wrong URL")
     else:
         return
 
