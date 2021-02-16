@@ -4,7 +4,7 @@ from forwardbot import client
 from forwardbot import logger
 from pathlib import Path
 from sys import argv
-from forwardbot.utils import start_forwardbot
+from forwardbot.utils import start_forwardbot, chatbot_cmd
 import glob
 
 if len(argv) not in (1, 3, 4):
