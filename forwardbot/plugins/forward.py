@@ -11,7 +11,7 @@ from os import execl
 import re
 import asyncio
 MessageCount = 0
-Running = 0
+status = set(int(x) for x in ("0").split())
 help_msg = Config.HELP_MSG
 sudo_users = Config.SUDO_USERS
 
@@ -115,10 +115,14 @@ async def handler(event):
     if not await is_sudo(event):
       await event.respond("You are not authorized to use this Bot. Create your own.")
       return
-    if Running == 1:
+    if "1" in status:
         await event.respond("Already an Instance is running...")
         await event.respond("You can only forward one at a time")
         return
+    if "2" in status:
+        await event.respond("Already an Instance is Sleeping..")
+        await event.respond("You can only forward one at a time")
+        return   
     await event.respond("Forwaring all messages")
     fromchat = int(event.pattern_match.group(1))
     tochat = int(event.pattern_match.group(2))
@@ -127,7 +131,6 @@ async def handler(event):
     global MessageCount
     print("Starting to forward")
     await event.respond('Starting to forward')
-    Running = 1
     async for message in client.iter_messages(fromchat, reverse=True):
         if count:
             if mcount:
@@ -135,6 +138,8 @@ async def handler(event):
                     try:
                         await client.send_file(tochat, message.document)
                         await asyncio.sleep(2)
+                        status.add("1")
+                        status.remove("2")
                         mcount -= 1
                         count -= 1
                         MessageCount += 1
@@ -143,6 +148,8 @@ async def handler(event):
             else:
                 print(f"You have send {MessageCount} messages" )
                 print("Waiting for 10 mins")
+                status.add("2")
+                status.remove("1")
                 m1 = await event.respond(f"You have send {MessageCount} messages.\nWaiting for 10 minutes.")
                 await asyncio.sleep(600)
                 mcount = 1000
@@ -151,12 +158,16 @@ async def handler(event):
         else:
             print(f"You have send {MessageCount} messages")
             print("Waiting for 30 mins")
+            status.add("2")
+            status.remove("1")
             m2 = await event.respond(f"You have send {MessageCount} messages.\nWaiting for 30 minutes.")
             await asyncio.sleep(1800)
             count = 4500
             print("Starting after 30 mins")
             await m2.delete()
     await event.delete()
+    status.remove("1")
+    status.remove("2")
     print("Finished")
     Running = 0
     await bot.send_message(event.chat_id, message=f"Succesfully finished sending {MessageCount} messages")
