@@ -44,8 +44,8 @@ def start_forwardbot(shortname):
         name = "forwardbot.plugins.{}".format(shortname)
         spec = importlib.util.spec_from_file_location(name, path)
         mod = importlib.util.module_from_spec(spec)
-        mod.chatbot_cmd = chatbot_cmd
-        mod.chatbot = bot
+        mod.forwardbot_cmd = forwardbot_cmd
+        mod.forwardbot = bot
         mod.Config = Config
         spec.loader.exec_module(mod)
         sys.modules["forwardbot.plugins" + shortname] = mod
