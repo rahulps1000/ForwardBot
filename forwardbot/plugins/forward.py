@@ -11,8 +11,8 @@ from os import execl
 import re
 import asyncio
 
-global MessageCount = 0
-global Running = 0
+MessageCount = 0
+Running = 0
 help_msg = Config.HELP_MSG
 sudo_users = Config.SUDO_USERS
 
@@ -149,7 +149,7 @@ async def handler(event):
                 await asyncio.sleep(600)
                 mcount = 1000
                 print("Starting after 10 mins")
-                await m1.reply("Starting after 10 mins")
+                await m1.delete()
         else:
             print(f"You have send {MessageCount} messages")
             print("Waiting for 30 mins")
@@ -157,7 +157,7 @@ async def handler(event):
             await asyncio.sleep(1800)
             count = 4500
             print("Starting after 30 mins")
-            await m2.reply("Starting after 30 mins")
+            await m2.delete()
     await event.delete()
     print("Finished")
     Running = 0
