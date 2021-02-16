@@ -7,6 +7,7 @@ from telethon.sync import events
 from forwardbot import bot
 from forwardbot import client
 from telethon import errors
+from os import execl
 import re
 import asyncio
 
@@ -57,9 +58,8 @@ async def handler(event):
     try:
         await event.respond('Updated the Script.')
         await event.respond('Restarted')
-        client.disconnect()
-        os.system("git pull")
-        os.execl(sys.executable, sys.executable, *sys.argv)
+        await bot.disconnect()
+        execl(sys.executable, sys.executable, *sys.argv)
     except:
         pass
 
