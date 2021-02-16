@@ -8,10 +8,22 @@
       "telegram-forwardbot",
       "productivity"
     ],
-    "repository": "https://github.com/rahulps100/Forward",
-    "website": "https://github.com/rahulps100/Forward",
-    "success_url": "https://github.com/rahulps100/Forward",
+    "repository": "https://github.com/rahulps100/ForwardBot",
+    "website": "https://github.com/rahulps100/ForwardBot",
+    "success_url": "https://github.com/rahulps100/ForwardBot",
     "env": {
+      "API_ID": {
+        "description": "Get this value from my.telegram.org! Please do not steal",
+        "value": ""
+      },
+      "API_HASH": {
+        "description": "Get this value from my.telegram.org! Please do not steal",
+        "value": ""
+      },
+      "STRING": {
+        "description": "Generate a telethon string session",
+        "value": ""
+      },
       "TOKEN": {
         "description": "Your Bot Token.",
         "value": ""
@@ -20,17 +32,9 @@
         "description": "Users who can use the bot",
         "value": ""
       },
-      "STRING": {
-        "description": "Generate a telethon string session",
-        "value": ""
-      },
-      "API_ID": {
-        "description": "Get this value from my.telegram.org! Please do not steal",
-        "value": ""
-      },
-      "API_HASH": {
-        "description": "Get this value from my.telegram.org! Please do not steal",
-        "value": ""
+      "ENV": {
+        "description": "Dont Do Anything",
+        "value": "True"
       }
     },
     "buildpacks": [
