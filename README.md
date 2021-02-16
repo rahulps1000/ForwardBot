@@ -7,7 +7,7 @@
 
 
 # Deploy
-[![Deploy To Heroku](https://www.herokucdn.com/deploy/button.svg)](https://heroku.com/deploy?template=https://github.com/DevsExpo/ChatBot/blob/main)
+[![Deploy To Heroku](https://www.herokucdn.com/deploy/button.svg)](https://heroku.com/deploy?template=https://github.com/rahulps100/Forward)
 
 # Normal Way
 ```python3
