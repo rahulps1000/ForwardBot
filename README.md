@@ -7,14 +7,14 @@
 
 
 # Deploy
-[![Deploy To Heroku](https://www.herokucdn.com/deploy/button.svg)](https://heroku.com/deploy?template=https://github.com/rahulps100/ForwardBot)
+[![Deploy](https://www.herokucdn.com/deploy/button.svg)](https://heroku.com/deploy)
 
 # Normal Way
 ```python3
 git clone https://github.com/rahulps100/ForwardBot
 cd ForwardBot
 pip install -r requirements.txt
-# Make A file Named local_config and put all your values There and Then Run the bot.
+
 python3 -m forwardbot
       or 
 python -m forwardbot
