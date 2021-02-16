@@ -10,7 +10,8 @@ from telethon import errors
 from os import execl
 import re
 import asyncio
-
+global Running
+global MessageCount
 MessageCount = 0
 Running = 0
 help_msg = Config.HELP_MSG
@@ -117,7 +118,7 @@ async def handler(event):
       await event.respond("You are not authorized to use this Bot. Create your own.")
       return
     global Runing
-    if Running:
+    if bool(Running):
         await event.respond("Already an Instance is running...")
         await event.respond("You can only forward one at a time")
         return
