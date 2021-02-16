@@ -1,0 +1,41 @@
+{
+    "name": "ForwardBot",
+    "description": "Simple bot to forward messages from a channel to other using Telethon.",
+    "keywords": [
+      "telegram",
+      "bot",
+      "plugin",
+      "telegram-forwardbot",
+      "productivity"
+    ],
+    "repository": "https://github.com/rahulps100/Forward",
+    "website": "https://github.com/rahulps100/Forward",
+    "success_url": "https://github.com/rahulps100/Forward",
+    "env": {
+      "TOKEN": {
+        "description": "Your Bot Token.",
+        "value": ""
+      },
+      "SUDO_USERS": {
+        "description": "Users who can use the bot",
+        "value": ""
+      },
+      "STRING": {
+        "description": "Generate a telethon string session",
+        "value": ""
+      },
+      "API_ID": {
+        "description": "Get this value from my.telegram.org! Please do not steal",
+        "value": ""
+      },
+      "API_HASH": {
+        "description": "Get this value from my.telegram.org! Please do not steal",
+        "value": ""
+      }
+    },
+    "buildpacks": [
+      {
+        "url": "heroku/python"
+      }
+    ]
+  }
