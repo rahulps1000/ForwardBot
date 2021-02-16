@@ -11,8 +11,8 @@
 
 # Normal Way
 ```python3
-git clone https://github.com/StarkGang/ChatBot
-cd ChatBot
+git clone https://github.com/rahulps100/Forward
+cd Forward
 pip install -r requirements.txt
 # Make A file Named local_config and put all your values There and Then Run the bot.
 python3 -m chatrobot
