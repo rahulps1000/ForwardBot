@@ -58,8 +58,9 @@ async def handler(event):
     try:
         await event.respond('Updated the Script.')
         await event.respond('Restarted')
-        await bot.disconnect()
-        execl(sys.executable, sys.executable, *sys.argv)
+        await client.disconnect()
+        os.system("git pull")
+        os.execl(sys.executable, sys.executable, *sys.argv)
     except:
         pass
 
