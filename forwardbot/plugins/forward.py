@@ -11,7 +11,8 @@ from os import execl
 import re
 import asyncio
 
-global MessageCount
+global MessageCount = 0
+global Running = 0
 help_msg = Config.HELP_MSG
 sudo_users = Config.SUDO_USERS
 
@@ -115,14 +116,20 @@ async def handler(event):
     if not await is_sudo(event):
       await event.respond("You are not authorized to use this Bot. Create your own.")
       return
-    m=await event.respond("Forwaring all messages")
+    global Runing
+    if Running:
+        await event.respond("Already an Instance is running...")
+        await event.respond("You can only forward one at a time")
+        return
+    await event.respond("Forwaring all messages")
     fromchat = int(event.pattern_match.group(1))
     tochat = int(event.pattern_match.group(2))
     count = 4500
     mcount = 1000
     global MessageCount
     print("Starting to forward")
-    await m.edit('Starting to forward')
+    await event.respond('Starting to forward')
+    Running = 1
     async for message in client.iter_messages(fromchat, reverse=True):
         if count:
             if mcount:
@@ -138,19 +145,20 @@ async def handler(event):
             else:
                 print(f"You have send {MessageCount} messages" )
                 print("Waiting for 10 mins")
-                await m.edit(f"You have send {MessageCount} messages.\nWaiting for 10 minutes.")
+                m1 = await event.respond(f"You have send {MessageCount} messages.\nWaiting for 10 minutes.")
                 await asyncio.sleep(600)
                 mcount = 1000
                 print("Starting after 10 mins")
-                await m.edit("Starting after 10 mins")
+                await m1.reply("Starting after 10 mins")
         else:
             print(f"You have send {MessageCount} messages")
             print("Waiting for 30 mins")
-            await m.edit(f"You have send {MessageCount} messages.\nWaiting for 30 minutes.")
+            m2 = await event.respond(f"You have send {MessageCount} messages.\nWaiting for 30 minutes.")
             await asyncio.sleep(1800)
             count = 4500
             print("Starting after 30 mins")
-            await m.edit("Starting after 30 mins")
+            await m2.reply("Starting after 30 mins")
     await event.delete()
     print("Finished")
+    Running = 0
     await bot.send_message(event.chat_id, message=f"Succesfully finished sending {MessageCount} messages")
