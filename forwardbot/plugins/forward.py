@@ -168,5 +168,4 @@ async def handler(event):
     await event.delete()
     status.remove("1")
     print("Finished")
-    Running = 0
     await bot.send_message(event.chat_id, message=f"Succesfully finished sending {MessageCount} messages")
