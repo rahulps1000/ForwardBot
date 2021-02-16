@@ -187,7 +187,7 @@ with TelegramClient(StringSession(string), api_id, api_hash) as client:
                 await m.edit("Starting after 30 mins")
         await event.delete()
         print("Finished")
-        await bot.send_message(event.chat_id, message="Finished")
+        await bot.send_message(event.chat_id, message=f"Succesfully finished sending {MessageCount} messages")
 
     
 
