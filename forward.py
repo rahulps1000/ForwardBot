@@ -15,11 +15,6 @@ import logging
 logging.basicConfig(format='[%(levelname) 5s/%(asctime)s] %(name)s: %(message)s',
                     level=logging.INFO)
 
-
-import logging
-logging.basicConfig(format='[%(levelname) 5s/%(asctime)s] %(name)s: %(message)s',
-                    level=logging.DEBUG)
-
 api_id = int(environ.get("API_ID"))
 api_hash = environ.get("API_HASH")
 bot_token = environ.get("TOKEN")
@@ -154,13 +149,14 @@ with TelegramClient(StringSession(string), api_id, api_hash) as client:
         if not await is_sudo(event):
           await event.respond("You are not authorized to use this Bot. Create your own.")
           return
-        await event.reply("Forwaring all messages")
+        m=await event.respond("Forwaring all messages")
         fromchat = int(event.pattern_match.group(1))
         tochat = int(event.pattern_match.group(2))
         count = 4500
         mcount = 1000
         global MessageCount
         print("Starting to forward")
+        await m.edit('Starting to forward')
         async for message in client.iter_messages(fromchat, reverse=True):
             if count:
                 if mcount:
@@ -176,17 +172,22 @@ with TelegramClient(StringSession(string), api_id, api_hash) as client:
                 else:
                     print(f"You have send {MessageCount} messages" )
                     print("Waiting for 10 mins")
+                    await m.edit(f"You have send {MessageCount} messages.\nWaiting for 10 minutes.")
                     await asyncio.sleep(600)
                     mcount = 1000
                     print("Starting after 10 mins")
+                    await m.edit("Starting after 10 mins")
             else:
                 print(f"You have send {MessageCount} messages")
                 print("Waiting for 30 mins")
+                await m.edit(f"You have send {MessageCount} messages.\nWaiting for 30 minutes.")
                 await asyncio.sleep(1800)
                 count = 4500
                 print("Starting after 30 mins")
+                await m.edit("Starting after 30 mins")
         await event.delete()
         print("Finished")
+        await bot.send_message(event.chat_id, message="Finished")
 
     
 
