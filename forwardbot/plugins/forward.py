@@ -2,7 +2,10 @@ from forwardbot import Config
 from telethon.tl.functions.users import GetFullUserRequest
 from telethon.tl.functions.messages import ImportChatInviteRequest
 from telethon.tl.functions.channels import JoinChannelRequest
+from forwardbot.utils import start_forwardbot
 from telethon.sync import events
+from forwardbot import bot
+from forwardbot import client
 from telethon import errors
 import re
 import asyncio
