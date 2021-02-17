@@ -30,7 +30,7 @@ python -m forwardbot
     **Usage :** Updates and Restarts the Plugin. <br />
     **Command :** ```/join``` *channel_link* <br />
     **Usage :** Joins the channel. <br />
-    **Command :**``` /help``` <br />
+    **Command :** ```/help``` <br />
     **Usage :** Get the help of this bot. <br />
 
 
