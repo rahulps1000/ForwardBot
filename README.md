@@ -21,17 +21,17 @@ python -m forwardbot
 ```
 # Commands
 **Command :** /fdoc from_channel_id to_chat_id
-    **Usage : ** Forwards all documents from the given channel to the chat where the command is executed.
-    **Command :** /count
-    **Usage : ** Returns the Total message sent using the bot.
-    **Command :** /reset
-    **Usage : ** Resets the message count to 0.
-    **Command :** /restart
-    **Usage : ** Updates and Restarts the Plugin.
-    **Command :** /join channel_link
-    **Usage : ** Joins the channel.
-    **Command :** /help
-    **Usage : ** Get the help of this bot.
+    **Usage : ** Forwards all documents from the given channel to the chat where the command is executed. \n
+    **Command :** /count \n
+    **Usage : ** Returns the Total message sent using the bot. \n
+    **Command :** /reset \n
+    **Usage : ** Resets the message count to 0. \n
+    **Command :** /restart \n
+    **Usage : ** Updates and Restarts the Plugin. \n
+    **Command :** /join channel_link \n
+    **Usage : ** Joins the channel. \n
+    **Command :** /help \n
+    **Usage : ** Get the help of this bot. \n
 
 
 # Licence
