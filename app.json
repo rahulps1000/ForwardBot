@@ -34,7 +34,7 @@
       },
       "ENV": {
         "description": "Dont Do Anything",
-        "value": "True"
+        "value": "True",
         "required": false
       }
     },
