@@ -9,7 +9,7 @@ class Config(object):
     HELP_MSG = """
     The Commands in the bot are:
     
-    **Command :** /fdoc channel_id
+    **Command :** /fdoc from_channel_id to_chat_id
     **Usage : ** Forwards all documents from the given channel to the chat where the command is executed.
     **Command :** /count
     **Usage : ** Returns the Total message sent using the bot.
