@@ -24,8 +24,8 @@
         "description": "Generate a telethon string session",
         "value": ""
       },
-      "TOKEN": {
-        "description": "Your Bot Token.",
+      "BOT_TOKEN": {
+        "description": "Your Bot Token. Generated using @BotFather",
         "value": ""
       },
       "SUDO_USERS": {
