@@ -35,7 +35,7 @@
       "ENV": {
         "description": "Dont Do Anything",
         "value": "True"
-          "required": "False"
+          "required": false
       }
     },
     "buildpacks": [
