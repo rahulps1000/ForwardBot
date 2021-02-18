@@ -141,7 +141,6 @@ async def handler(event):
                         await client.send_file(tochat, message.document)
                         await asyncio.sleep(2)
                         status.add("1")
-                        status.remove("2")
                         mcount -= 1
                         count -= 1
                         MessageCount += 1
