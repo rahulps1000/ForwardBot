@@ -11,7 +11,9 @@ from os import execl
 import re
 import asyncio
 MessageCount = 0
-status = set(int(x) for x in ("0").split())
+
+BOT_STATUS = "0"
+status = set(int(x) for x in (BOT_STATUS).split())
 help_msg = Config.HELP_MSG
 sudo_users = Config.SUDO_USERS
 
@@ -166,6 +168,11 @@ async def handler(event):
             print("Starting after 30 mins")
             await m2.delete()
     await event.delete()
-    status.remove("1")
+    try:
+        status.remove("1")
+        status.remove("2")
+    except:
+        pass
+ 
     print("Finished")
     await bot.send_message(event.chat_id, message=f"Succesfully finished sending {MessageCount} messages")
