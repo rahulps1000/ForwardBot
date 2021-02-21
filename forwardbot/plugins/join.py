@@ -26,7 +26,7 @@ async def handler(event):
             global fromchannel
             link = r.message.message.strip()
             if not r.is_reply:
-                await conv.send_message("reply")
+                await conv.send_message("Please send the message as a reply to the message.")
             else:
                 type = ''
                 if link:
