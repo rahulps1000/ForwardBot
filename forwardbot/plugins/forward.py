@@ -5,11 +5,14 @@ from forwardbot.utils import is_sudo
 from telethon import Button
 import asyncio
 from forwardbot.utils import forwardbot_cmd
+import datetime
+from datetime import timedelta
 
 MessageCount = 0
 BOT_STATUS = "0"
 status = set(int(x) for x in (BOT_STATUS).split())
-
+datetimeFormat = '%Y-%m-%d %H:%M:%S.%f'
+start = None
 
 @forwardbot_cmd("forward", is_args=False)
 async def handler(event):
@@ -58,6 +61,22 @@ async def handler(event):
     await event.respond("Message count has been reset to 0")
     print("Message count has been reset to 0")
 
+@forwardbot_cmd("uptime", is_args=False)
+async def handler(event):
+    if not await is_sudo(event):
+        await event.respond("You are not authorized to use this Bot. Create your own.")
+        return
+    global start
+    if start:
+        stop = str(datetime.datetime.now())
+        diff = datetime.datetime.strptime(start, datetimeFormat) - datetime.datetime.strptime(stop, datetimeFormat)
+        duration = abs(diff)
+        days, seconds = duration.days, duration.seconds
+        hours = days * 24 + seconds
+        minutes = (seconds % 3600)
+        seconds = seconds % 60
+        await event.respond(f"The bot is forwarding files for {days} days, {hours} hours, {minutes} minutes and {seconds} seconds")
+    print("Message count has been reset to 0")
 
 @forwardbot_cmd("status", is_args=False)
 async def handler(event):
@@ -103,7 +122,7 @@ async def handler(event):
             mcount = 1009
             global MessageCount
             print("Starting to forward")
-            
+            start = str(datetime.datetime.now())
             async for message in client.iter_messages(fromchat, reverse=True):
                 if count:
                     if mcount:
@@ -146,7 +165,14 @@ async def handler(event):
             await m.edit("You must join the channel before starting forwarding. Use /join")
             return
         print("Finished")
-        await event.respond(f"Succesfully finished sending {MessageCount} messages")
+        stop = str(datetime.datetime.now())
+        diff = datetime.datetime.strptime(start, datetimeFormat) - datetime.datetime.strptime(stop, datetimeFormat)
+        duration = abs(diff)
+        days, seconds = duration.days, duration.seconds
+        hours = days * 24 + seconds
+        minutes = (seconds % 3600)
+        seconds = seconds % 60
+        await event.respond(f"Succesfully finished sending {MessageCount} messages in {days} days, {hours} hours, {minutes} minutes and {seconds} seconds")
         try:
             status.remove("1")
         except:
@@ -179,7 +205,7 @@ async def handler(event):
             mcount = 1009
             global MessageCount
             print("Starting to forward")
-            
+            start = str(datetime.datetime.now())
             async for message in client.iter_messages(fromchat, reverse=True):
                 if count:
                     if mcount:
@@ -223,7 +249,14 @@ async def handler(event):
             await m.edit("You must join the channel before starting forwarding. Use /join")
             return
         print("Finished")
-        await event.respond(f"Succesfully finished sending {MessageCount} messages")
+        stop = str(datetime.datetime.now())
+        diff = datetime.datetime.strptime(start, datetimeFormat) - datetime.datetime.strptime(stop, datetimeFormat)
+        duration = abs(diff)
+        days, seconds = duration.days, duration.seconds
+        hours = days * 24 + seconds
+        minutes = (seconds % 3600)
+        seconds = seconds % 60
+        await event.respond(f"Succesfully finished sending {MessageCount} messages in {days} days, {hours} hours, {minutes} minutes and {seconds} seconds")
         try:
             status.remove("1")
         except:
@@ -255,7 +288,7 @@ async def handler(event):
             mcount = 4507
             global MessageCount
             print("Starting to forward")
-            
+            start = str(datetime.datetime.now())
             async for message in client.iter_messages(fromchat, reverse=True):
                 if count:
                     if mcount:
@@ -299,7 +332,14 @@ async def handler(event):
             await m.edit("You must join the channel before starting forwarding. Use /join")
             return
         print("Finished")
-        await event.respond(f"Succesfully finished sending {MessageCount} messages")
+        stop = str(datetime.datetime.now())
+        diff = datetime.datetime.strptime(start, datetimeFormat) - datetime.datetime.strptime(stop, datetimeFormat)
+        duration = abs(diff)
+        days, seconds = duration.days, duration.seconds
+        hours = days * 24 + seconds
+        minutes = (seconds % 3600)
+        seconds = seconds % 60
+        await event.respond(f"Succesfully finished sending {MessageCount} messages in {days} days, {hours} hours, {minutes} minutes and {seconds} seconds")
         try:
             status.remove("1")
         except:
@@ -331,7 +371,7 @@ async def handler(event):
             mcount = 1009
             global MessageCount
             print("Starting to forward")
-            
+            start = str(datetime.datetime.now())
             async for message in client.iter_messages(fromchat, reverse=True):
                 if count:
                     if mcount:
@@ -375,7 +415,14 @@ async def handler(event):
             await m.edit("You must join the channel before starting forwarding. Use /join")
             return
         print("Finished")
-        await event.respond(f"Succesfully finished sending {MessageCount} messages")
+        stop = str(datetime.datetime.now())
+        diff = datetime.datetime.strptime(start, datetimeFormat) - datetime.datetime.strptime(stop, datetimeFormat)
+        duration = abs(diff)
+        days, seconds = duration.days, duration.seconds
+        hours = days * 24 + seconds
+        minutes = (seconds % 3600)
+        seconds = seconds % 60
+        await event.respond(f"Succesfully finished sending {MessageCount} messages in {days} days, {hours} hours, {minutes} minutes and {seconds} seconds")
         try:
             status.remove("1")
         except:
