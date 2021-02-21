@@ -1,10 +1,9 @@
-from forwardbot import Config
+from forwardbot.BotConfig import Config
 from forwardbot import bot
 from forwardbot import client
-from forwardbot import logger
 from pathlib import Path
 from sys import argv
-from forwardbot.utils import start_forwardbot, forwardbot_cmd
+from forwardbot.utils import start_forwardbot
 import glob
 
 if len(argv) not in (1, 3, 4):
@@ -22,7 +21,7 @@ for name in files:
         shortname = path1.stem
         start_forwardbot(shortname.replace(".py", ""))
 
-print("Your ChatBot is Ready.")
+print("Your BOT is Ready.")
 print("Try Sending /start")
 
 if len(argv) not in (1, 3, 4):

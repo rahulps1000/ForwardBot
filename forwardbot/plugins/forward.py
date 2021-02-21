@@ -1,39 +1,52 @@
-from forwardbot import Config
-from telethon.tl.functions.users import GetFullUserRequest
-from telethon.tl.functions.messages import ImportChatInviteRequest
-from telethon.tl.functions.channels import JoinChannelRequest
-from forwardbot.utils import start_forwardbot
 from telethon.sync import events
 from forwardbot import bot
 from forwardbot import client
-from telethon import errors
-from os import execl
-import re
+from forwardbot.utils import is_sudo
+from telethon import Button
 import asyncio
-MessageCount = 0
+from forwardbot.utils import forwardbot_cmd
 
+MessageCount = 0
 BOT_STATUS = "0"
 status = set(int(x) for x in (BOT_STATUS).split())
-help_msg = Config.HELP_MSG
-sudo_users = Config.SUDO_USERS
 
-@forwardbot_cmd("start", is_args=False)
-async def start(event):
-    if not await is_sudo(event):
-        await event.respond("You are not authorized to use this Bot. Create your own.")
-        return
-    replied_user = await event.client(GetFullUserRequest(event.sender_id))
-    firstname = replied_user.user.first_name
-    await event.respond(message=f"**Hello, {firstname}, I Am Batch Forwarder Bot.** \n**Using me you can forward all the files in a channel to anothor easily** \n**USE AT OWN RISK !!!!! ACCOUNT MAY GET BAN**"
-                     )
-@forwardbot_cmd("count", is_args=False)
+
+@forwardbot_cmd("forward", is_args=False)
 async def handler(event):
     if not await is_sudo(event):
         await event.respond("You are not authorized to use this Bot. Create your own.")
         return
-    await event.respond(f"You have send {MessageCount} messages")
-    print(f"You have send {MessageCount} messages")
-
+    if "1" in status:
+        await event.respond("A task is already running.")
+        return
+    if "2" in status:
+        await event.respond("Sleeping the engine for avoiding ban.")
+        return
+    async with bot.conversation(event.chat_id) as conv:
+        await conv.send_message("Please send the channel id from where you want to forward messages as a reply to this message.")
+        while True:
+            r = conv.wait_event(events.NewMessage(chats=event.chat_id))
+            r = await r
+            global fromchannel
+            fromchannel = r.message.message.strip()
+            if not r.is_reply:
+                await conv.send_message("reply")
+            else:
+                await conv.send_message("Okay now send me the channel id to where you want to forward messages as a reply to this message.")
+                while True:
+                    p = conv.wait_event(events.NewMessage(chats=event.chat_id))
+                    p = await p
+                    global tochannel
+                    tochannel = p.message.message.strip()
+                    if not p.is_reply:
+                        await conv.send_message("reply")
+                    else:
+                        await event.respond('Select What you need to forward', buttons=[
+                            [Button.inline('All Messages', b'all'), Button.inline('Only Photos', b'photo')],
+                            [Button.inline('Only Documents', b'docs'), Button.inline(' Only Video' , b'video')]
+                            ])
+                        break
+                break
 
 @forwardbot_cmd("reset", is_args=False)
 async def handler(event):
@@ -45,133 +58,329 @@ async def handler(event):
     await event.respond("Message count has been reset to 0")
     print("Message count has been reset to 0")
 
-@forwardbot_cmd("help", is_args=False)
+
+@forwardbot_cmd("status", is_args=False)
 async def handler(event):
     if not await is_sudo(event):
         await event.respond("You are not authorized to use this Bot. Create your own.")
         return
-    await event.respond(help_msg)
 
-@forwardbot_cmd("restart", is_args=False)
-async def handler(event):
-    if not await is_sudo(event):
-        await event.respond("You are not authorized to use this Bot. Create your own.")
-        return
-    try:
-        await event.respond('Updated the Script.')
-        await event.respond('Restarted')
-        await client.disconnect()
-        os.system("git pull")
-        os.execl(sys.executable, sys.executable, *sys.argv)
-    except:
-        pass
-
-@forwardbot_cmd("admin", is_args=False)
-async def handler(event):
-    if str(event.sender_id) in sudo_users:
-        await event.respond("You are an admin")
-    else:
-        await event.respond("You are not an admin")
-
-@bot.on(events.NewMessage(pattern=r'/join (.*)'))
-async def handler(event):
-    if not await is_sudo(event):
-        await event.respond("You are not authorized to use this Bot. Create your own.")
-        return
-    link = event.pattern_match.group(1)
-    type = ''
-    if link:
-        if 'joinchat' in link:
-            chann = re.search(r".joinchat.(.*)", link)
-            type = 'private'
-        else:
-            chann = re.search(r"t.me.(.*)", link)
-            type = 'public'
-        if type == 'private':
-            try:
-                await client(ImportChatInviteRequest(chann.group(1)))
-                await event.respond("Successfully joined the Channel")
-            except errors.UserAlreadyParticipantError:
-                await event.respond("You have already joined the Channel")
-            except errors.InviteHashExpiredError:
-                await event.respond("Wrong URL")
-        if type == 'public':
-            try:
-                await client(JoinChannelRequest(chann.group(1)))
-                await event.respond("Successfully joined the Channel")
-            except:
-                await event.respond("Wrong URL")
-    else:
-        return
-
-
-async def is_sudo(event):
-    if str(event.sender_id) in sudo_users:
-        return True
-    else:
-        return False
-
-
-@bot.on(events.NewMessage(pattern=r'/fdoc (.*) (.*)'))
-async def handler(event):
-    if not await is_sudo(event):
-      await event.respond("You are not authorized to use this Bot. Create your own.")
-      return
     if "1" in status:
-        await event.respond("Already an Instance is running...")
-        await event.respond("You can only forward one at a time")
-        return
+        await event.respond("Forwarding")
     if "2" in status:
-        await event.respond("Already an Instance is Sleeping..")
-        await event.respond("You can only forward one at a time")
-        return   
-    await event.respond("Forwaring all messages")
-    fromchat = int(event.pattern_match.group(1))
-    tochat = int(event.pattern_match.group(2))
-    count = 4500
-    mcount = 1000
-    global MessageCount
-    print("Starting to forward")
-    await event.respond('Starting to forward')
-    async for message in client.iter_messages(fromchat, reverse=True):
-        if count:
-            if mcount:
-                if message.document and not message.sticker :
-                    try:
-                        await client.send_file(tochat, message.document)
-                        await asyncio.sleep(2)
-                        status.add("1")
-                        mcount -= 1
-                        count -= 1
-                        MessageCount += 1
-                    except:
-                        pass
-            else:
-                print(f"You have send {MessageCount} messages" )
-                print("Waiting for 10 mins")
-                status.add("2")
-                status.remove("1")
-                m1 = await event.respond(f"You have send {MessageCount} messages.\nWaiting for 10 minutes.")
-                await asyncio.sleep(600)
-                mcount = 1000
-                print("Starting after 10 mins")
-                await m1.delete()
-        else:
-            print(f"You have send {MessageCount} messages")
-            print("Waiting for 30 mins")
-            status.add("2")
+        await event.respond("Sleeping")
+    if "1" not in status and "2" not in status:
+        await event.respond("Idle")
+
+
+@forwardbot_cmd("count", is_args=False)
+async def handler(event):
+    if not await is_sudo(event):
+        await event.respond("You are not authorized to use this Bot. Create your own.")
+        return
+    await event.respond(f"You have send {MessageCount} messages")
+    print(f"You have send {MessageCount} messages")
+
+
+@bot.on(events.CallbackQuery)
+async def handler(event):
+    if event.data == b'all':
+        await event.delete()
+        if not await is_sudo(event):
+            await event.respond("You are not authorized to use this Bot. Create your own.")
+            return
+        if "1" in status:
+            await event.respond("A task is already running.")
+            return
+        if "2" in status:
+            await event.respond("Sleeping the engine for avoiding ban.")
+            return
+        try:
+            m=await event.respond("Trying Forwarding")
+            fromchat = int(fromchannel)
+            tochat = int(tochannel)
+            count = 10
+            mcount = 6
+            global MessageCount
+            print("Starting to forward")
+            
+            async for message in client.iter_messages(fromchat, reverse=True):
+                if count:
+                    if mcount:
+                        try:
+                            await client.send_message(tochat, message)
+                            status.add("1")
+                            try:
+                                status.remove("2")
+                            except:
+                                pass
+                            await asyncio.sleep(2)
+                            mcount -= 1
+                            count -= 1
+                            MessageCount += 1
+                            await m.edit("Now Forwarding all messages.")
+                        except:
+                            pass
+                    else:
+                        print(f"You have send {MessageCount} messages" )
+                        print("Waiting for 10 mins")
+                        status.add("2")
+                        status.remove("1")
+                        await m.edit(f"You have send {MessageCount} messages.\nWaiting for 10 minutes.")
+                        await asyncio.sleep(10)
+                        mcount = 6
+                        print("Starting after 10 mins")
+                        await m.edit("Starting after 10 mins")
+                else:
+                    print(f"You have send {MessageCount} messages")
+                    print("Waiting for 30 mins")
+                    status.add("2")
+                    status.remove("1")
+                    await m.edit(f"You have send {MessageCount} messages.\nWaiting for 30 minutes.")
+                    await asyncio.sleep(15)
+                    count = 10
+                    print("Starting after 30 mins")
+                    await m.edit("Starting after 30 mins")
+                    
+        except ValueError:
+            await m.edit("You must join the channel before starting forwarding. Use /join")
+            return
+        print("Finished")
+        await event.respond(f"Succesfully finished sending {MessageCount} messages")
+        try:
             status.remove("1")
-            m2 = await event.respond(f"You have send {MessageCount} messages.\nWaiting for 30 minutes.")
-            await asyncio.sleep(1800)
-            count = 4500
-            print("Starting after 30 mins")
-            await m2.delete()
-    await event.delete()
-    try:
-        status.remove("1")
-        status.remove("2")
-    except:
-        pass
- 
-    print("Finished")
-    await bot.send_message(event.chat_id, message=f"Succesfully finished sending {MessageCount} messages")
+        except:
+            pass
+        try:
+            status.remove("2")
+        except:
+            pass
+
+
+
+@bot.on(events.CallbackQuery)
+async def handler(event):
+    if event.data == b'docs':
+        await event.delete()
+        if not await is_sudo(event):
+            await event.respond("You are not authorized to use this Bot. Create your own.")
+            return
+        if "1" in status:
+            await event.respond("A task is already running.")
+            return
+        if "2" in status:
+            await event.respond("Sleeping the engine for avoiding ban.")
+            return
+        try:
+            m=await event.respond("Trying Forwarding")
+            fromchat = int(fromchannel)
+            tochat = int(tochannel)
+            count = 10
+            mcount = 6
+            global MessageCount
+            print("Starting to forward")
+            
+            async for message in client.iter_messages(fromchat, reverse=True):
+                if count:
+                    if mcount:
+                        if message.document and not message.sticker:
+                            try:
+                                await client.send_file(tochat, message.document)
+                                status.add("1")
+                                try:
+                                    status.remove("2")
+                                except:
+                                    pass
+                                await asyncio.sleep(2)
+                                mcount -= 1
+                                count -= 1
+                                MessageCount += 1
+                                await m.edit("Now Forwarding all documents.")
+                            except:
+                                pass
+                    else:
+                        print(f"You have send {MessageCount} messages" )
+                        print("Waiting for 10 mins")
+                        status.add("2")
+                        status.remove("1")
+                        await m.edit(f"You have send {MessageCount} messages.\nWaiting for 10 minutes.")
+                        await asyncio.sleep(10)
+                        mcount = 6
+                        print("Starting after 10 mins")
+                        await m.edit("Starting after 10 mins")
+                else:
+                    print(f"You have send {MessageCount} messages")
+                    print("Waiting for 30 mins")
+                    status.add("2")
+                    status.remove("1")
+                    await m.edit(f"You have send {MessageCount} messages.\nWaiting for 30 minutes.")
+                    await asyncio.sleep(15)
+                    count = 10
+                    print("Starting after 30 mins")
+                    await m.edit("Starting after 30 mins")
+                    
+        except ValueError:
+            await m.edit("You must join the channel before starting forwarding. Use /join")
+            return
+        print("Finished")
+        await event.respond(f"Succesfully finished sending {MessageCount} messages")
+        try:
+            status.remove("1")
+        except:
+            pass
+        try:
+            status.remove("2")
+        except:
+            pass
+
+
+@bot.on(events.CallbackQuery)
+async def handler(event):
+    if event.data == b'photo':
+        await event.delete()
+        if not await is_sudo(event):
+            await event.respond("You are not authorized to use this Bot. Create your own.")
+            return
+        if "1" in status:
+            await event.respond("A task is already running.")
+            return
+        if "2" in status:
+            await event.respond("Sleeping the engine for avoiding ban.")
+            return
+        try:
+            m=await event.respond("Trying Forwarding")
+            fromchat = int(fromchannel)
+            tochat = int(tochannel)
+            count = 10
+            mcount = 6
+            global MessageCount
+            print("Starting to forward")
+            
+            async for message in client.iter_messages(fromchat, reverse=True):
+                if count:
+                    if mcount:
+                        if message.photo:
+                            try:
+                                await client.send_message(tochat, message.photo)
+                                status.add("1")
+                                try:
+                                    status.remove("2")
+                                except:
+                                    pass
+                                await asyncio.sleep(2)
+                                mcount -= 1
+                                count -= 1
+                                MessageCount += 1
+                                await m.edit("Now Forwarding all photos.")
+                            except:
+                                pass
+                    else:
+                        print(f"You have send {MessageCount} messages" )
+                        print("Waiting for 10 mins")
+                        status.add("2")
+                        status.remove("1")
+                        await m.edit(f"You have send {MessageCount} messages.\nWaiting for 10 minutes.")
+                        await asyncio.sleep(10)
+                        mcount = 6
+                        print("Starting after 10 mins")
+                        await m.edit("Starting after 10 mins")
+                else:
+                    print(f"You have send {MessageCount} messages")
+                    print("Waiting for 30 mins")
+                    status.add("2")
+                    status.remove("1")
+                    await m.edit(f"You have send {MessageCount} messages.\nWaiting for 30 minutes.")
+                    await asyncio.sleep(15)
+                    count = 10
+                    print("Starting after 30 mins")
+                    await m.edit("Starting after 30 mins")
+                    
+        except ValueError:
+            await m.edit("You must join the channel before starting forwarding. Use /join")
+            return
+        print("Finished")
+        await event.respond(f"Succesfully finished sending {MessageCount} messages")
+        try:
+            status.remove("1")
+        except:
+            pass
+        try:
+            status.remove("2")
+        except:
+            pass
+
+
+@bot.on(events.CallbackQuery)
+async def handler(event):
+    if event.data == b'video':
+        await event.delete()
+        if not await is_sudo(event):
+            await event.respond("You are not authorized to use this Bot. Create your own.")
+            return
+        if "1" in status:
+            await event.respond("A task is already running.")
+            return
+        if "2" in status:
+            await event.respond("Sleeping the engine for avoiding ban.")
+            return
+        try:
+            m=await event.respond("Trying Forwarding")
+            fromchat = int(fromchannel)
+            tochat = int(tochannel)
+            count = 10
+            mcount = 6
+            global MessageCount
+            print("Starting to forward")
+            
+            async for message in client.iter_messages(fromchat, reverse=True):
+                if count:
+                    if mcount:
+                        if message.video:
+                            try:
+                                await client.send_message(tochat, message.video)
+                                status.add("1")
+                                try:
+                                    status.remove("2")
+                                except:
+                                    pass
+                                await asyncio.sleep(2)
+                                mcount -= 1
+                                count -= 1
+                                MessageCount += 1
+                                await m.edit("Now Forwarding all documents.")
+                            except:
+                                pass
+                    else:
+                        print(f"You have send {MessageCount} messages" )
+                        print("Waiting for 10 mins")
+                        status.add("2")
+                        status.remove("1")
+                        await m.edit(f"You have send {MessageCount} messages.\nWaiting for 10 minutes.")
+                        await asyncio.sleep(10)
+                        mcount = 6
+                        print("Starting after 10 mins")
+                        await m.edit("Starting after 10 mins")
+                else:
+                    print(f"You have send {MessageCount} messages")
+                    print("Waiting for 30 mins")
+                    status.add("2")
+                    status.remove("1")
+                    await m.edit(f"You have send {MessageCount} messages.\nWaiting for 30 minutes.")
+                    await asyncio.sleep(15)
+                    count = 10
+                    print("Starting after 30 mins")
+                    await m.edit("Starting after 30 mins")
+                    
+        except ValueError:
+            await m.edit("You must join the channel before starting forwarding. Use /join")
+            return
+        print("Finished")
+        await event.respond(f"Succesfully finished sending {MessageCount} messages")
+        try:
+            status.remove("1")
+        except:
+            pass
+        try:
+            status.remove("2")
+        except:
+            pass

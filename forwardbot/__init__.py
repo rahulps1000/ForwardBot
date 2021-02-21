@@ -1,10 +1,12 @@
 import sys
 from logging import DEBUG, WARNING, basicConfig, getLogger, INFO
 import os
+
 from telethon import TelegramClient
 from distutils.util import strtobool as sb
+from telethon import events
 from telethon.sessions import StringSession
-ENV = os.environ.get("ENV", False)
+ENV = True
 
 if ENV:
     from forwardbot.BotConfig import Config
@@ -44,3 +46,22 @@ if Config.STRING_SESSION is None:
 if Config.SUDO_USERS is None:
     logger.info("STRING_SESSION is None. Bot Is Quiting")
     sys.exit(1)
+
+async def is_sudo(event):
+    if str(event.sender_id) in Config.SUDO_USERS:
+        return True
+    else:
+        return False
+@bot.on(events.NewMessage(pattern=r'/restart'))
+async def handler(event):
+    if not await is_sudo(event):
+        await event.respond("You are not authorized to use this Bot. Create your own.")
+        return
+    try:
+        await event.respond('Updated the Script.')
+        await event.respond('Restarted')
+        client.disconnect()
+        os.system("git pull")
+        os.execl(sys.executable, sys.executable, *sys.argv)
+    except:
+        pass

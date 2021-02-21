@@ -1,12 +1,6 @@
-import inspect
-import logging
-import re
-from pathlib import Path
-import functools
 from telethon import events
 from forwardbot import bot
-from forwardbot import Config
-import glob
+from forwardbot.BotConfig import Config
 bothandler = Config.COMMAND_HAND_LER
 def forwardbot_cmd(add_cmd, is_args=False):
     def cmd(func):
@@ -19,6 +13,11 @@ def forwardbot_cmd(add_cmd, is_args=False):
         )
     return cmd
 
+async def is_sudo(event):
+    if str(event.sender_id) in Config.SUDO_USERS:
+        return True
+    else:
+        return False
 
 def start_forwardbot(shortname):
     if shortname.startswith("__"):
@@ -33,7 +32,7 @@ def start_forwardbot(shortname):
         spec = importlib.util.spec_from_file_location(name, path)
         mod = importlib.util.module_from_spec(spec)
         spec.loader.exec_module(mod)
-        print("Starting Your Chat Bot.")
+        print("Starting Your  Bot.")
         print("IMPORTED " + shortname)
     else:
         import importlib
