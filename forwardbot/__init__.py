@@ -52,16 +52,15 @@ async def is_sudo(event):
         return True
     else:
         return False
-@bot.on(events.NewMessage(pattern=r'/restart'))
+@bot.on(events.NewMessage(pattern=r'/cancel'))
 async def handler(event):
     if not await is_sudo(event):
         await event.respond("You are not authorized to use this Bot. Create your own.")
         return
     try:
-        await event.respond('Updated the Script.')
-        await event.respond('Restarted')
+        
+        await event.respond('Cancelled and restarted.')
         client.disconnect()
-        os.system("git pull")
         os.execl(sys.executable, sys.executable, *sys.argv)
     except:
         pass
