@@ -30,7 +30,7 @@ async def handler(event):
             global fromchannel
             fromchannel = r.message.message.strip()
             if not r.is_reply:
-                await conv.send_message("reply")
+                await conv.send_message("Please send the message as a reply to the message.")
             else:
                 await conv.send_message("Okay now send me the channel id to where you want to forward messages as a reply to this message.")
                 while True:
@@ -39,7 +39,7 @@ async def handler(event):
                     global tochannel
                     tochannel = p.message.message.strip()
                     if not p.is_reply:
-                        await conv.send_message("reply")
+                        await conv.send_message("Please send the message as a reply to the message.")
                     else:
                         await event.respond('Select What you need to forward', buttons=[
                             [Button.inline('All Messages', b'all'), Button.inline('Only Photos', b'photo')],
