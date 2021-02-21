@@ -76,7 +76,8 @@ async def handler(event):
         minutes = (seconds % 3600)
         seconds = seconds % 60
         await event.respond(f"The bot is forwarding files for {days} days, {hours} hours, {minutes} minutes and {seconds} seconds")
-    print("Message count has been reset to 0")
+    else:
+        await event.respond("Please start a forwarding to check the uptime")
 
 @forwardbot_cmd("status", is_args=False)
 async def handler(event):
