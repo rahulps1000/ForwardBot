@@ -134,11 +134,11 @@ async def handler(event):
                         try:
                             await client.send_message(tochat, message)
                             try:
-                              if len(str(message.message)) <= 110:
+                              if len(str(message.message)) <= 95:
                                 print("Now forwarding: " + str(message.message))
                               else:
                                 logmsg = str(message.message)
-                                logmsg = logmsg[:110] + "..."
+                                logmsg = logmsg[:95] + "..."
                                 print("Now Forwarding: " + logmsg)
                             except:
                               print("Unable to retrive data.")
@@ -228,11 +228,11 @@ async def handler(event):
                             try:
                                 await client.send_file(tochat, message.document) 
                                 try:
-                                  if len(str(message.message)) <= 110:
+                                  if len(str(message.message)) <= 95:
                                     print("Now forwarding: " + str(message.message))
                                   else:
                                     logmsg = str(message.message)
-                                    logmsg = logmsg[:110] + "..."
+                                    logmsg = logmsg[:95] + "..."
                                     print("Now Forwarding: " + logmsg)
                                 except:
                                   print("Unable to retrive data.")
@@ -320,11 +320,11 @@ async def handler(event):
                             try:
                                 await client.send_message(tochat, message.photo)
                                 try:
-                                  if len(str(message.message)) <= 110:
+                                  if len(str(message.message)) <= 95:
                                     print("Now forwarding: " + str(message.message))
                                   else:
                                     logmsg = str(message.message)
-                                    logmsg = logmsg[:110] + "..."
+                                    logmsg = logmsg[:95] + "..."
                                     print("Now Forwarding: " + logmsg)
                                 except:
                                   print("Unable to retrive data.")
@@ -412,11 +412,11 @@ async def handler(event):
                             try:
                                 await client.send_message(tochat, message.video)
                                 try:
-                                  if len(str(message.message)) <= 110:
+                                  if len(str(message.message)) <= 95:
                                     print("Now forwarding: " + str(message.message))
                                   else:
                                     logmsg = str(message.message)
-                                    logmsg = logmsg[:110] + "..."
+                                    logmsg = logmsg[:95] + "..."
                                     print("Now Forwarding: " + logmsg)
                                 except:
                                   print("Unable to retrive data.")
