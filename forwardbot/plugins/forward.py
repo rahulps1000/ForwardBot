@@ -229,10 +229,10 @@ async def handler(event):
                             try:
                                 await client.send_file(tochat, message.document) 
                                 try:
-                                  if len(str(message.message)) <= 95:
-                                    print("Now forwarding: " + str(message.message))
+                                  if len(str(message.file.name)) <= 95:
+                                    print("Now forwarding: " + str(message.file.name))
                                   else:
-                                    logmsg = str(message.message)
+                                    logmsg = str(message.file.name)
                                     logmsg = logmsg[:95] + "..."
                                     print("Now Forwarding: " + logmsg)
                                 except:
