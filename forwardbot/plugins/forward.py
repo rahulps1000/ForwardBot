@@ -219,7 +219,16 @@ async def handler(event):
                         if message.document and not message.sticker:
                             try:
                                 await client.send_file(tochat, message.document) 
-                                print(message.message)
+                                try:
+                                  if len(str(message.message)) <= 25:
+                                    
+                                    print("Now forwarding" + message.message)
+                                   else:
+                                    logmsg = str(message.message)
+                                    logmsg = logmsg[:25] + "..."
+                                    print("Now Forwarding" + logmsg)
+                                except:
+                                  print("Unable to retrive data.")
                                 status.add("1")
                                 try:
                                     status.remove("2")
