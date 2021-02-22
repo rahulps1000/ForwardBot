@@ -6,7 +6,7 @@
 
 
 
-# Deploy
+# Easy Way
 [![Deploy](https://www.herokucdn.com/deploy/button.svg)](https://heroku.com/deploy)
 
 # Normal Way
@@ -20,19 +20,24 @@ python3 -m forwardbot
 python -m forwardbot
 ```
 # Commands
-**Command :** ```/fdoc``` *from_channel_id* *to_chat_id* <br />
+**Command :** ```/forward``` <br />
     **Usage :** Forwards all documents from the given channel to the chat where the command is executed. <br />
     **Command :** ```/count``` <br />
     **Usage :** Returns the Total message sent using the bot. <br />
     **Command :** ```/reset``` <br />
     **Usage :** Resets the message count to 0. <br />
-    **Command :** ```/restart``` <br />
-    **Usage :** Updates and Restarts the Plugin. <br />
-    **Command :** ```/join``` *channel_link* <br />
-    **Usage :** Joins the channel. <br />
+    **Command :** ```/cancel``` <br />
+    **Usage :** Cancel the current operation. <br />
+    **Command :** ```/join```<br />
+    **Usage :** Joins the given channel. <br />
     **Command :** ```/help``` <br />
     **Usage :** Get the help of this bot. <br />
-
+    **Command :** ```/status``` <br />
+    **Usage :** Check the status of Bot. <br />
+    **Command :** ```/uptime``` <br />
+    **Usage :** Check the uptime of bot. <br />
+    
+Use [commandlist](https://github.com/rahulps1000/ForwardBot/blob/main/commands.txt) to add the commands to your Bot.
 
 # Licence
 [![GNU GPLv3 Image](https://www.gnu.org/graphics/gplv3-127x51.png)](http://www.gnu.org/licenses/gpl-3.0.en.html)  
