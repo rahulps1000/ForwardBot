@@ -9,7 +9,7 @@ import datetime
 from datetime import timedelta
 import logging
 logging.basicConfig(format='[%(levelname) 5s/%(asctime)s] %(name)s: %(message)s',
-                    level=logging.WARNING)
+                    level=logging.DEBUG)
 
 MessageCount = 0
 BOT_STATUS = "0"
@@ -219,7 +219,8 @@ async def handler(event):
                         if message.document and not message.sticker:
                             try:
                                 await client.send_file(tochat, message.document)
-                                print(documentAttributeFilename)
+                                logmsg = str(DocumentAttributeFilename)
+                                print(logmsg)
                                 status.add("1")
                                 try:
                                     status.remove("2")
