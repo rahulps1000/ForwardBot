@@ -139,10 +139,11 @@ async def handler(event):
                             except:
                                 pass
                             try:
-                              if len(message) <= 25:
+                              if len(str(message)) <= 25:
                                 print(message)
                               else:
-                                logmsg = message[:25] + "..."
+                                logmsg = str(message)
+                                logmsg = logmsg[:25] + "..."
                                 print(logmsg)
                             except:
                               print("Unable to print")
