@@ -7,11 +7,15 @@ import asyncio
 from forwardbot.utils import forwardbot_cmd
 import datetime
 from datetime import timedelta
+import logging
+logging.basicConfig(format='[%(levelname) 5s/%(asctime)s] %(name)s: %(message)s',
+                    level=logging.DEBUG)
 
 MessageCount = 0
 BOT_STATUS = "0"
 status = set(int(x) for x in (BOT_STATUS).split())
 datetimeFormat = '%Y-%m-%d %H:%M:%S.%f'
+global start
 start = None
 
 @forwardbot_cmd("forward", is_args=False)
@@ -130,12 +134,22 @@ async def handler(event):
                     if mcount:
                         try:
                             await client.send_message(tochat, message)
+                            try:
+                              if len(str(message.message)) <= 95:
+                                print("Now forwarding: " + str(message.message))
+                              else:
+                                logmsg = str(message.message)
+                                logmsg = logmsg[:95] + "..."
+                                print("Now Forwarding: " + logmsg)
+                            except:
+                              print("Unable to retrive data.")
                             status.add("1")
                             try:
                                 status.remove("2")
                             except:
                                 pass
                             await asyncio.sleep(2)
+                            
                             mcount -= 1
                             count -= 1
                             MessageCount += 1
@@ -214,7 +228,16 @@ async def handler(event):
                     if mcount:
                         if message.document and not message.sticker:
                             try:
-                                await client.send_file(tochat, message.document)
+                                await client.send_file(tochat, message.document) 
+                                try:
+                                  if len(str(message.file.name)) <= 95:
+                                    print("Now forwarding: " + str(message.file.name))
+                                  else:
+                                    logmsg = str(message.file.name)
+                                    logmsg = logmsg[:95] + "..."
+                                    print("Now Forwarding: " + logmsg)
+                                except:
+                                  print("Unable to retrive data.")
                                 status.add("1")
                                 try:
                                     status.remove("2")
@@ -299,6 +322,15 @@ async def handler(event):
                         if message.photo:
                             try:
                                 await client.send_message(tochat, message.photo)
+                                try:
+                                  if len(str(message.message)) <= 95:
+                                    print("Now forwarding: " + str(message.message))
+                                  else:
+                                    logmsg = str(message.message)
+                                    logmsg = logmsg[:95] + "..."
+                                    print("Now Forwarding: " + logmsg)
+                                except:
+                                  print("Unable to retrive data.")
                                 status.add("1")
                                 try:
                                     status.remove("2")
@@ -383,6 +415,15 @@ async def handler(event):
                         if message.video:
                             try:
                                 await client.send_message(tochat, message.video)
+                                try:
+                                  if len(str(message.message)) <= 95:
+                                    print("Now forwarding: " + str(message.message))
+                                  else:
+                                    logmsg = str(message.message)
+                                    logmsg = logmsg[:95] + "..."
+                                    print("Now Forwarding: " + logmsg)
+                                except:
+                                  print("Unable to retrive data.")
                                 status.add("1")
                                 try:
                                     status.remove("2")
