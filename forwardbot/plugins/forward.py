@@ -133,7 +133,8 @@ async def handler(event):
                     if mcount:
                         try:
                             await client.send_message(tochat, message)
-                            print(message.document)
+                            
+                            print(message) if len(message) <= 25 else (message[:25] + "..."))
                             status.add("1")
                             try:
                                 status.remove("2")
