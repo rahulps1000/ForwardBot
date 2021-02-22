@@ -2,6 +2,8 @@ from forwardbot import Config
 from telethon.tl.functions.users import GetFullUserRequest
 from forwardbot.utils import forwardbot_cmd
 from forwardbot.utils import is_sudo
+from forwardbot import bot
+
 MessageCount = 0
 
 BOT_STATUS = "0"
@@ -28,6 +30,10 @@ async def handler(event):
         await event.respond("You are not authorized to use this Bot. Create your own.")
         return
     await event.respond(help_msg)
+
+@forwardbot_cmd("test", is_args=False)
+async def handler(event):
+    await event.respond(bot.owner)
 
 
 
