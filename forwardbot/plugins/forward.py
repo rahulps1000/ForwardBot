@@ -220,6 +220,7 @@ async def handler(event):
             mcount = 1009
             global MessageCount
             print("Starting to forward")
+            global start
             start = str(datetime.datetime.now())
             async for message in client.iter_messages(fromchat, reverse=True):
                 if count:
