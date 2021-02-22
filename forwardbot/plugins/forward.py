@@ -220,12 +220,12 @@ async def handler(event):
                             try:
                                 await client.send_file(tochat, message.document) 
                                 try:
-                                  if len(str(message.message)) <= 25:
-                                    print("Now forwarding" + str(message.message))
+                                  if len(str(message.message)) <= 45:
+                                    print("Now forwarding: " + str(message.message))
                                   else:
                                     logmsg = str(message.message)
-                                    logmsg = logmsg[:25] + "..."
-                                    print("Now Forwarding" + logmsg)
+                                    logmsg = logmsg[:45] + "..."
+                                    print("Now Forwarding: " + logmsg)
                                 except:
                                   print("Unable to retrive data.")
                                 status.add("1")
