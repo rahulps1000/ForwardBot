@@ -72,13 +72,13 @@ async def handler(event):
         return
     global start
     if start:
-        stop = str(datetime.datetime.now())
-        diff = datetime.datetime.strptime(start, datetimeFormat) - datetime.datetime.strptime(stop, datetimeFormat)
-        duration = abs(diff)
+        stop = datetime.now()
+        diff = stop - start
+        duration = diff
         days, seconds = duration.days, duration.seconds
-        hours = days * 24 + seconds
-        minutes = (seconds % 3600)
-        seconds = seconds % 60
+        hours = duration.hours
+        minutes = duration.minutes
+        #seconds = duration.seconds
         await event.respond(f"The bot is forwarding files for {days} days, {hours} hours, {minutes} minutes and {seconds} seconds")
     else:
         await event.respond("Please start a forwarding to check the uptime")
@@ -221,7 +221,7 @@ async def handler(event):
             global MessageCount
             print("Starting to forward")
             global start
-            start = str(datetime.datetime.now())
+            start = datetime.now()
             async for message in client.iter_messages(fromchat, reverse=True):
                 if count:
                     if mcount:
