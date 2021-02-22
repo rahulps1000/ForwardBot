@@ -1,6 +1,6 @@
 # Forward Bot
 
-<p align="center"><a href="#"><img src="https://static.botsrv.com/website/img/quriobot_favicon.1727b193.png" width="0"></a></p> 
+<p align="center"><a href="#"><img src="https://telegra.ph/file/fa4d9d23a211f6bcf807b.jpg" width="250"></a></p> 
 <h1 align="center"><b>Forwarder Bot</b></h1>
 <h4 align="center">A Simple Forwarder Bot In Telethon TO Forward one Channel Contents to Another</h4>
 
