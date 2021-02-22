@@ -2,6 +2,7 @@ from telethon.sync import events
 from forwardbot import bot
 from forwardbot import client
 from forwardbot.utils import is_sudo
+from forwardbot.tool import *
 from telethon import Button
 import asyncio
 from forwardbot.utils import forwardbot_cmd
