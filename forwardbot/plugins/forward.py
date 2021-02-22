@@ -219,7 +219,7 @@ async def handler(event):
                         if message.document and not message.sticker:
                             try:
                                 await client.send_file(tochat, message.document)
-                                print(message.attributes[DocumentAttributeFilename])
+                                print(message.attributes)
                                 status.add("1")
                                 try:
                                     status.remove("2")
