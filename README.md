@@ -38,7 +38,11 @@ python -m forwardbot
     **Usage :** Check the uptime of bot. <br />
     
 
+# Credits
+Special thanks to [Subinps](https://github.com/subinps) for Contributing to create this bot
 
+# Thanks
+thanks to [Sandy](https://github.com/sandy1709) for sharing the media_type function from [CatUserBot](https://github.com/sandy1709/catuserbot).
 
 # Licence
 [![GNU GPLv3 Image](https://www.gnu.org/graphics/gplv3-127x51.png)](http://www.gnu.org/licenses/gpl-3.0.en.html)  
