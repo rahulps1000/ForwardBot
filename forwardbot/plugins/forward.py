@@ -7,11 +7,15 @@ import asyncio
 from forwardbot.utils import forwardbot_cmd
 import datetime
 from datetime import timedelta
+import logging
+logging.basicConfig(format='[%(levelname) 5s/%(asctime)s] %(name)s: %(message)s',
+                    level=logging.WARNING)
 
 MessageCount = 0
 BOT_STATUS = "0"
 status = set(int(x) for x in (BOT_STATUS).split())
 datetimeFormat = '%Y-%m-%d %H:%M:%S.%f'
+global start
 start = None
 
 @forwardbot_cmd("forward", is_args=False)
@@ -129,6 +133,7 @@ async def handler(event):
                     if mcount:
                         try:
                             await client.send_message(tochat, message)
+                            print(message)
                             status.add("1")
                             try:
                                 status.remove("2")
