@@ -1,0 +1,9 @@
+start - Start the Bot.
+help - View this list.
+join - Joins the given channel.
+forward - Forward the contents from one channel to othor.
+cancel - Cancel the current task.
+uptime - Check the uptime status.
+status - Check the current status.
+count - Total number of messages sent.
+reset - reset the count to zero.
