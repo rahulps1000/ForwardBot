@@ -133,14 +133,14 @@ async def handler(event):
                     if mcount:
                         try:
                             await client.send_message(tochat, message)
+                            print(message.message)
                             status.add("1")
                             try:
                                 status.remove("2")
                             except:
                                 pass
-                            
                             await asyncio.sleep(2)
-                            print(message.message)
+                            
                             mcount -= 1
                             count -= 1
                             MessageCount += 1
