@@ -6,12 +6,7 @@ from forwardbot.BotConfig import Config
 from telethon import errors
 from forwardbot import bot
 from forwardbot import client
-
-async def is_sudo(event):
-    if str(event.sender_id) in Config.SUDO_USERS:
-        return True
-    else:
-        return False
+from forwardbot.utils import is_sudo
 
 @bot.on(events.NewMessage(pattern=r'/join'))
 async def handler(event):
