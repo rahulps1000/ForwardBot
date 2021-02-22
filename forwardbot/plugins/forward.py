@@ -221,9 +221,8 @@ async def handler(event):
                                 await client.send_file(tochat, message.document) 
                                 try:
                                   if len(str(message.message)) <= 25:
-                                    
-                                    print("Now forwarding" + message.message)
-                                   else:
+                                    print("Now forwarding" + str(message.message))
+                                  else:
                                     logmsg = str(message.message)
                                     logmsg = logmsg[:25] + "..."
                                     print("Now Forwarding" + logmsg)
