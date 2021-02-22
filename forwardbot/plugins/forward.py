@@ -2,6 +2,7 @@ from telethon.sync import events
 from forwardbot import bot
 from forwardbot import client
 from forwardbot.utils import is_sudo
+from forwardbot.tool import *
 from telethon import Button
 import asyncio
 from forwardbot.utils import forwardbot_cmd
@@ -226,7 +227,7 @@ async def handler(event):
             async for message in client.iter_messages(fromchat, reverse=True):
                 if count:
                     if mcount:
-                        if message.document and not message.sticker:
+                        if media_type(message) == 'Document':
                             try:
                                 await client.send_file(tochat, message.document) 
                                 try:
@@ -319,7 +320,7 @@ async def handler(event):
             async for message in client.iter_messages(fromchat, reverse=True):
                 if count:
                     if mcount:
-                        if message.photo:
+                        if media_type(message) == 'Photo':
                             try:
                                 await client.send_message(tochat, message.photo)
                                 try:
@@ -412,7 +413,7 @@ async def handler(event):
             async for message in client.iter_messages(fromchat, reverse=True):
                 if count:
                     if mcount:
-                        if message.video:
+                        if media_type(message) == 'Video':
                             try:
                                 await client.send_message(tochat, message.video)
                                 try:
