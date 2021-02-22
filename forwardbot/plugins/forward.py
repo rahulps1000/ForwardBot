@@ -2,21 +2,17 @@ from telethon.sync import events
 from forwardbot import bot
 from forwardbot import client
 from forwardbot.utils import is_sudo
-from forwardbot.tool import *
 from telethon import Button
 import asyncio
 from forwardbot.utils import forwardbot_cmd
 import datetime
 from datetime import timedelta
-import logging
-logging.basicConfig(format='[%(levelname) 5s/%(asctime)s] %(name)s: %(message)s',
-                    level=logging.DEBUG)
 
 MessageCount = 0
 BOT_STATUS = "0"
 status = set(int(x) for x in (BOT_STATUS).split())
 datetimeFormat = '%Y-%m-%d %H:%M:%S.%f'
-global start
+
 start = None
 
 @forwardbot_cmd("forward", is_args=False)
@@ -91,11 +87,11 @@ async def handler(event):
         return
 
     if "1" in status:
-        await event.respond("Forwarding")
+        await event.respond("Currently Bot is forwarding messages.")
     if "2" in status:
-        await event.respond("Sleeping")
+        await event.respond("Now Bot is Sleeping")
     if "1" not in status and "2" not in status:
-        await event.respond("Idle")
+        await event.respond("Bot is Idle now, You can start a task.")
 
 
 @forwardbot_cmd("count", is_args=False)
@@ -136,12 +132,20 @@ async def handler(event):
                         try:
                             await client.send_message(tochat, message)
                             try:
-                              if len(str(message.message)) <= 95:
-                                print("Now forwarding: " + str(message.message))
+                              if message.document:
+                                if len(str(message.file.name)) <= 95:
+                                  print("Succesfully forwarded: " + str(message.file.name))
+                                else:
+                                  logmsg = str(message.file.name)
+                                  logmsg = logmsg[:95] + "..."
+                                  print("Succesfully forwarded: " + logmsg)
                               else:
-                                logmsg = str(message.message)
-                                logmsg = logmsg[:95] + "..."
-                                print("Now Forwarding: " + logmsg)
+                                if len(str(message.message)) <= 95:
+                                  print("Now forwarding: " + str(message.message))
+                                else:
+                                  logmsg = str(message.message)
+                                  logmsg = logmsg[:95] + "..."
+                                  print("Now Forwarding: " + logmsg)
                             except:
                               print("Unable to retrive data.")
                             status.add("1")
@@ -227,16 +231,16 @@ async def handler(event):
             async for message in client.iter_messages(fromchat, reverse=True):
                 if count:
                     if mcount:
-                        if media_type(message) == 'Document':
+                        if message.document and not message.sticker:
                             try:
                                 await client.send_file(tochat, message.document) 
                                 try:
                                   if len(str(message.file.name)) <= 95:
-                                    print("Now forwarding: " + str(message.file.name))
+                                    print("Succesfully forwarded: " + str(message.file.name))
                                   else:
                                     logmsg = str(message.file.name)
                                     logmsg = logmsg[:95] + "..."
-                                    print("Now Forwarding: " + logmsg)
+                                    print("Succesfully forwarded: " + logmsg)
                                 except:
                                   print("Unable to retrive data.")
                                 status.add("1")
@@ -320,16 +324,16 @@ async def handler(event):
             async for message in client.iter_messages(fromchat, reverse=True):
                 if count:
                     if mcount:
-                        if media_type(message) == 'Photo':
+                        if message.photo:
                             try:
                                 await client.send_message(tochat, message.photo)
                                 try:
                                   if len(str(message.message)) <= 95:
-                                    print("Now forwarding: " + str(message.message))
+                                    print("Succesfully forwarded: " + str(message.message))
                                   else:
                                     logmsg = str(message.message)
                                     logmsg = logmsg[:95] + "..."
-                                    print("Now Forwarding: " + logmsg)
+                                    print("Succesfully forwarded: " + logmsg)
                                 except:
                                   print("Unable to retrive data.")
                                 status.add("1")
@@ -413,16 +417,16 @@ async def handler(event):
             async for message in client.iter_messages(fromchat, reverse=True):
                 if count:
                     if mcount:
-                        if media_type(message) == 'Video':
+                        if message.video:
                             try:
                                 await client.send_message(tochat, message.video)
                                 try:
                                   if len(str(message.message)) <= 95:
-                                    print("Now forwarding: " + str(message.message))
+                                    print("Succesfully forwarded: " + str(message.message))
                                   else:
                                     logmsg = str(message.message)
                                     logmsg = logmsg[:95] + "..."
-                                    print("Now Forwarding: " + logmsg)
+                                    print("Succesfully forwarded: " + logmsg)
                                 except:
                                   print("Unable to retrive data.")
                                 status.add("1")
@@ -434,7 +438,7 @@ async def handler(event):
                                 mcount -= 1
                                 count -= 1
                                 MessageCount += 1
-                                await m.edit("Now Forwarding all documents.")
+                                await m.edit("Now Forwarding all videos.")
                             except:
                                 pass
                     else:
