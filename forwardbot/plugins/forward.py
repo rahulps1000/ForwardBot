@@ -138,16 +138,9 @@ async def handler(event):
                                 status.remove("2")
                             except:
                                 pass
-                            try:
-                              if len(str(message)) <= 25:
-                                print(message)
-                              else:
-                                logmsg = str(message)
-                                logmsg = logmsg[:25] + "..."
-                                print(logmsg)
-                            except:
-                              print("Unable to print")
+                            
                             await asyncio.sleep(2)
+                            print(message.message)
                             mcount -= 1
                             count -= 1
                             MessageCount += 1
