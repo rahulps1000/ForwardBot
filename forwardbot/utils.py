@@ -14,7 +14,7 @@ def forwardbot_cmd(add_cmd, is_args=False):
     return cmd
 
 async def is_sudo(event):
-    if str(event.sender_id) in Config.SUDO_USERS or event.sender_id == bot.me.id:
+    if str(event.sender_id) in Config.SUDO_USERS:
         return True
     else:
         return False
