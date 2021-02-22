@@ -72,9 +72,9 @@ async def handler(event):
         diff = datetime.datetime.strptime(start, datetimeFormat) - datetime.datetime.strptime(stop, datetimeFormat)
         duration = abs(diff)
         days, seconds = duration.days, duration.seconds
-        hours = days * 24 + seconds
-        minutes = (seconds % 3600)
-        seconds = seconds % 60
+        hours = int(seconds / 3600)
+        minutes = int((seconds % 3600)/60)
+        seconds = int(seconds % 60)
         await event.respond(f"The bot is forwarding files for {days} days, {hours} hours, {minutes} minutes and {seconds} seconds")
     else:
         await event.respond("Please start a forwarding to check the uptime")
@@ -123,6 +123,7 @@ async def handler(event):
             mcount = 1009
             global MessageCount
             print("Starting to forward")
+            global start
             start = str(datetime.datetime.now())
             async for message in client.iter_messages(fromchat, reverse=True):
                 if count:
@@ -170,9 +171,9 @@ async def handler(event):
         diff = datetime.datetime.strptime(start, datetimeFormat) - datetime.datetime.strptime(stop, datetimeFormat)
         duration = abs(diff)
         days, seconds = duration.days, duration.seconds
-        hours = days * 24 + seconds
-        minutes = (seconds % 3600)
-        seconds = seconds % 60
+        hours = int(seconds / 3600)
+        minutes = int((seconds % 3600)/60)
+        seconds = int(seconds % 60)
         await event.respond(f"Succesfully finished sending {MessageCount} messages in {days} days, {hours} hours, {minutes} minutes and {seconds} seconds")
         try:
             status.remove("1")
@@ -206,6 +207,7 @@ async def handler(event):
             mcount = 1009
             global MessageCount
             print("Starting to forward")
+            global start
             start = str(datetime.datetime.now())
             async for message in client.iter_messages(fromchat, reverse=True):
                 if count:
@@ -254,9 +256,9 @@ async def handler(event):
         diff = datetime.datetime.strptime(start, datetimeFormat) - datetime.datetime.strptime(stop, datetimeFormat)
         duration = abs(diff)
         days, seconds = duration.days, duration.seconds
-        hours = days * 24 + seconds
-        minutes = (seconds % 3600)
-        seconds = seconds % 60
+        hours = int(seconds / 3600)
+        minutes = int((seconds % 3600)/60)
+        seconds = int(seconds % 60)
         await event.respond(f"Succesfully finished sending {MessageCount} messages in {days} days, {hours} hours, {minutes} minutes and {seconds} seconds")
         try:
             status.remove("1")
@@ -289,6 +291,7 @@ async def handler(event):
             mcount = 4507
             global MessageCount
             print("Starting to forward")
+            global start
             start = str(datetime.datetime.now())
             async for message in client.iter_messages(fromchat, reverse=True):
                 if count:
@@ -337,9 +340,9 @@ async def handler(event):
         diff = datetime.datetime.strptime(start, datetimeFormat) - datetime.datetime.strptime(stop, datetimeFormat)
         duration = abs(diff)
         days, seconds = duration.days, duration.seconds
-        hours = days * 24 + seconds
-        minutes = (seconds % 3600)
-        seconds = seconds % 60
+        hours = int(seconds / 3600)
+        minutes = int((seconds % 3600)/60)
+        seconds = int(seconds % 60)
         await event.respond(f"Succesfully finished sending {MessageCount} messages in {days} days, {hours} hours, {minutes} minutes and {seconds} seconds")
         try:
             status.remove("1")
@@ -372,6 +375,7 @@ async def handler(event):
             mcount = 1009
             global MessageCount
             print("Starting to forward")
+            global start
             start = str(datetime.datetime.now())
             async for message in client.iter_messages(fromchat, reverse=True):
                 if count:
@@ -420,9 +424,9 @@ async def handler(event):
         diff = datetime.datetime.strptime(start, datetimeFormat) - datetime.datetime.strptime(stop, datetimeFormat)
         duration = abs(diff)
         days, seconds = duration.days, duration.seconds
-        hours = days * 24 + seconds
-        minutes = (seconds % 3600)
-        seconds = seconds % 60
+        hours = int(seconds / 3600)
+        minutes = int((seconds % 3600)/60)
+        seconds = int(seconds % 60)
         await event.respond(f"Succesfully finished sending {MessageCount} messages in {days} days, {hours} hours, {minutes} minutes and {seconds} seconds")
         try:
             status.remove("1")
