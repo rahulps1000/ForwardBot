@@ -21,28 +21,28 @@ python -m forwardbot
 ```
 # Commands
 **Command :** ```/forward``` <br />
-    **Usage :** Forwards all documents from the given channel to the chat where the command is executed. <br />
-    **Command :** ```/count``` <br />
-    **Usage :** Returns the Total message sent using the bot. <br />
-    **Command :** ```/reset``` <br />
-    **Usage :** Resets the message count to 0. <br />
-    **Command :** ```/cancel``` <br />
-    **Usage :** Cancel the current operation. <br />
-    **Command :** ```/join```<br />
-    **Usage :** Joins the given channel. <br />
-    **Command :** ```/help``` <br />
-    **Usage :** Get the help of this bot. <br />
-    **Command :** ```/status``` <br />
-    **Usage :** Check the status of Bot. <br />
-    **Command :** ```/uptime``` <br />
-    **Usage :** Check the uptime of bot. <br />
+**Usage :** Forwards any from the given channel to the chat where the command is executed. <br />
+**Command :** ```/count``` <br />
+**Usage :** Returns the Total message sent using the bot. <br />
+**Command :** ```/reset``` <br />
+**Usage :** Resets the message count to 0. <br />
+**Command :** ```/cancel``` <br />
+**Usage :** Cancel the current operation. <br />
+**Command :** ```/join```<br />
+**Usage :** Joins the given channel. <br />
+**Command :** ```/help``` <br />
+**Usage :** Get the help of this bot. <br />
+**Command :** ```/status``` <br />
+**Usage :** Check the status of Bot. <br />
+**Command :** ```/uptime``` <br />
+**Usage :** Check the uptime of bot. <br />
     
 
 # Credits
 Special thanks to [Subinps](https://github.com/subinps) for Contributing to create this bot
 
 # Thanks
-thanks to [Sandy](https://github.com/sandy1709) for sharing the media_type function from [CatUserBot](https://github.com/sandy1709/catuserbot).
+Thanks to [Sandy](https://github.com/sandy1709) for sharing the media_type function from [CatUserBot](https://github.com/sandy1709/catuserbot).
 
 # Licence
 [![GNU GPLv3 Image](https://www.gnu.org/graphics/gplv3-127x51.png)](http://www.gnu.org/licenses/gpl-3.0.en.html)  
