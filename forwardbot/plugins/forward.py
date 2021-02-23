@@ -176,8 +176,8 @@ async def handler(event):
                                         count -= 1
                                         MessageCount += 1
                                         await m.edit(f"Now Forwarding {type}.")
-                            except:
-                                pass
+                                    except:
+                                        pass
                     else:
                         print(f"You have send {MessageCount} messages" )
                         print("Waiting for 10 mins")
