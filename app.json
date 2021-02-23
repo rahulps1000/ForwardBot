@@ -30,8 +30,7 @@
       },
       "SUDO_USERS": {
         "description": "Users who can use the bot",
-        "value": "",
-        "required": false
+        "value": ""
       },
       "ENV": {
         "description": "Dont Do Anything",
