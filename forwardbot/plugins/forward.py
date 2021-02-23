@@ -327,7 +327,7 @@ async def handler(event):
                     if mcount:
                         if media_type(message) == 'Photo':
                             try:
-                                await client.send_message(tochat, message.photo)
+                                await client.send_message(tochat, message)
                                 try:
                                   if len(str(message.message)) <= 95:
                                     print("Succesfully forwarded: " + str(message.message))
@@ -420,7 +420,7 @@ async def handler(event):
                     if mcount:
                         if media_type(message) == 'Video':
                             try:
-                                await client.send_message(tochat, message.video)
+                                await client.send_message(tochat, message)
                                 try:
                                   if len(str(message.message)) <= 95:
                                     print("Succesfully forwarded: " + str(message.message))
