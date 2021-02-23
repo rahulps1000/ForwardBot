@@ -107,295 +107,18 @@ async def handler(event):
 @bot.on(events.CallbackQuery)
 async def handler(event):
     if event.data == b'all':
+        type = "All"
         await event.delete()
-        if not await is_sudo(event):
-            await event.respond("You are not authorized to use this Bot. Create your own.")
-            return
-        if "1" in status:
-            await event.respond("A task is already running.")
-            return
-        if "2" in status:
-            await event.respond("Sleeping the engine for avoiding ban.")
-            return
-        try:
-            m=await event.respond("Trying Forwarding")
-            fromchat = int(fromchannel)
-            tochat = int(tochannel)
-            count = 4507
-            mcount = 1009
-            global MessageCount
-            print("Starting to forward")
-            global start
-            start = str(datetime.datetime.now())
-            async for message in client.iter_messages(fromchat, reverse=True):
-                if count:
-                    if mcount:
-                        try:
-                            await client.send_message(tochat, message)
-                            try:
-                              if message.document:
-                                if len(str(message.file.name)) <= 95:
-                                  print("Succesfully forwarded: " + str(message.file.name))
-                                else:
-                                  logmsg = str(message.file.name)
-                                  logmsg = logmsg[:95] + "..."
-                                  print("Succesfully forwarded: " + logmsg)
-                              else:
-                                if len(str(message.message)) <= 95:
-                                  print("Now forwarding: " + str(message.message))
-                                else:
-                                  logmsg = str(message.message)
-                                  logmsg = logmsg[:95] + "..."
-                                  print("Now Forwarding: " + logmsg)
-                            except:
-                              print("Unable to retrive data.")
-                            status.add("1")
-                            try:
-                                status.remove("2")
-                            except:
-                                pass
-                            await asyncio.sleep(2)
-                            
-                            mcount -= 1
-                            count -= 1
-                            MessageCount += 1
-                            await m.edit("Now Forwarding all messages.")
-                        except:
-                            pass
-                    else:
-                        print(f"You have send {MessageCount} messages" )
-                        print("Waiting for 10 mins")
-                        status.add("2")
-                        status.remove("1")
-                        await m.edit(f"You have send {MessageCount} messages.\nWaiting for 10 minutes.")
-                        await asyncio.sleep(600)
-                        mcount = 1009
-                        print("Starting after 10 mins")
-                        await m.edit("Starting after 10 mins")
-                else:
-                    print(f"You have send {MessageCount} messages")
-                    print("Waiting for 30 mins")
-                    status.add("2")
-                    status.remove("1")
-                    await m.edit(f"You have send {MessageCount} messages.\nWaiting for 30 minutes.")
-                    await asyncio.sleep(1800)
-                    count = 4507
-                    print("Starting after 30 mins")
-                    await m.edit("Starting after 30 mins")
-                    
-        except ValueError:
-            await m.edit("You must join the channel before starting forwarding. Use /join")
-            return
-        print("Finished")
-        stop = str(datetime.datetime.now())
-        diff = datetime.datetime.strptime(start, datetimeFormat) - datetime.datetime.strptime(stop, datetimeFormat)
-        duration = abs(diff)
-        days, seconds = duration.days, duration.seconds
-        hours = int(seconds / 3600)
-        minutes = int((seconds % 3600)/60)
-        seconds = int(seconds % 60)
-        await event.respond(f"Succesfully finished sending {MessageCount} messages in {days} days, {hours} hours, {minutes} minutes and {seconds} seconds")
-        try:
-            status.remove("1")
-        except:
-            pass
-        try:
-            status.remove("2")
-        except:
-            pass
-
-
-
-@bot.on(events.CallbackQuery)
-async def handler(event):
     if event.data == b'docs':
+        type = "Document"
         await event.delete()
-        if not await is_sudo(event):
-            await event.respond("You are not authorized to use this Bot. Create your own.")
-            return
-        if "1" in status:
-            await event.respond("A task is already running.")
-            return
-        if "2" in status:
-            await event.respond("Sleeping the engine for avoiding ban.")
-            return
-        try:
-            m=await event.respond("Trying Forwarding")
-            fromchat = int(fromchannel)
-            tochat = int(tochannel)
-            count = 4507
-            mcount = 1009
-            global MessageCount
-            print("Starting to forward")
-            global start
-            start = str(datetime.datetime.now())
-            async for message in client.iter_messages(fromchat, reverse=True):
-                if count:
-                    if mcount:
-                        if media_type(message) == 'Document':
-                            try:
-                                await client.send_file(tochat, message.document) 
-                                try:
-                                  if len(str(message.file.name)) <= 95:
-                                    print("Succesfully forwarded: " + str(message.file.name))
-                                  else:
-                                    logmsg = str(message.file.name)
-                                    logmsg = logmsg[:95] + "..."
-                                    print("Succesfully forwarded: " + logmsg)
-                                except:
-                                  print("Unable to retrive data.")
-                                status.add("1")
-                                try:
-                                    status.remove("2")
-                                except:
-                                    pass
-                                await asyncio.sleep(2)
-                                mcount -= 1
-                                count -= 1
-                                MessageCount += 1
-                                await m.edit("Now Forwarding all documents.")
-                            except:
-                                pass
-                    else:
-                        print(f"You have send {MessageCount} messages" )
-                        print("Waiting for 10 mins")
-                        status.add("2")
-                        status.remove("1")
-                        await m.edit(f"You have send {MessageCount} messages.\nWaiting for 10 minutes.")
-                        await asyncio.sleep(600)
-                        mcount = 1009
-                        print("Starting after 10 mins")
-                        await m.edit("Starting after 10 mins")
-                else:
-                    print(f"You have send {MessageCount} messages")
-                    print("Waiting for 30 mins")
-                    status.add("2")
-                    status.remove("1")
-                    await m.edit(f"You have send {MessageCount} messages.\nWaiting for 30 minutes.")
-                    await asyncio.sleep(1800)
-                    count = 4507
-                    print("Starting after 30 mins")
-                    await m.edit("Starting after 30 mins")
-                    
-        except ValueError:
-            await m.edit("You must join the channel before starting forwarding. Use /join")
-            return
-        print("Finished")
-        stop = str(datetime.datetime.now())
-        diff = datetime.datetime.strptime(start, datetimeFormat) - datetime.datetime.strptime(stop, datetimeFormat)
-        duration = abs(diff)
-        days, seconds = duration.days, duration.seconds
-        hours = int(seconds / 3600)
-        minutes = int((seconds % 3600)/60)
-        seconds = int(seconds % 60)
-        await event.respond(f"Succesfully finished sending {MessageCount} messages in {days} days, {hours} hours, {minutes} minutes and {seconds} seconds")
-        try:
-            status.remove("1")
-        except:
-            pass
-        try:
-            status.remove("2")
-        except:
-            pass
-
-
-@bot.on(events.CallbackQuery)
-async def handler(event):
     if event.data == b'photo':
+        type = "Photo"
         await event.delete()
-        if not await is_sudo(event):
-            await event.respond("You are not authorized to use this Bot. Create your own.")
-            return
-        if "1" in status:
-            await event.respond("A task is already running.")
-            return
-        if "2" in status:
-            await event.respond("Sleeping the engine for avoiding ban.")
-            return
-        try:
-            m=await event.respond("Trying Forwarding")
-            fromchat = int(fromchannel)
-            tochat = int(tochannel)
-            count = 1009
-            mcount = 4507
-            global MessageCount
-            print("Starting to forward")
-            global start
-            start = str(datetime.datetime.now())
-            async for message in client.iter_messages(fromchat, reverse=True):
-                if count:
-                    if mcount:
-                        if media_type(message) == 'Photo':
-                            try:
-                                await client.send_message(tochat, message)
-                                try:
-                                  if len(str(message.message)) <= 95:
-                                    print("Succesfully forwarded: " + str(message.message))
-                                  else:
-                                    logmsg = str(message.message)
-                                    logmsg = logmsg[:95] + "..."
-                                    print("Succesfully forwarded: " + logmsg)
-                                except:
-                                  print("Unable to retrive data.")
-                                status.add("1")
-                                try:
-                                    status.remove("2")
-                                except:
-                                    pass
-                                await asyncio.sleep(2)
-                                mcount -= 1
-                                count -= 1
-                                MessageCount += 1
-                                await m.edit("Now Forwarding all photos.")
-                            except:
-                                pass
-                    else:
-                        print(f"You have send {MessageCount} messages" )
-                        print("Waiting for 10 mins")
-                        status.add("2")
-                        status.remove("1")
-                        await m.edit(f"You have send {MessageCount} messages.\nWaiting for 10 minutes.")
-                        await asyncio.sleep(600)
-                        mcount = 1009
-                        print("Starting after 10 mins")
-                        await m.edit("Starting after 10 mins")
-                else:
-                    print(f"You have send {MessageCount} messages")
-                    print("Waiting for 30 mins")
-                    status.add("2")
-                    status.remove("1")
-                    await m.edit(f"You have send {MessageCount} messages.\nWaiting for 30 minutes.")
-                    await asyncio.sleep(1800)
-                    count = 4507
-                    print("Starting after 30 mins")
-                    await m.edit("Starting after 30 mins")
-                    
-        except ValueError:
-            await m.edit("You must join the channel before starting forwarding. Use /join")
-            return
-        print("Finished")
-        stop = str(datetime.datetime.now())
-        diff = datetime.datetime.strptime(start, datetimeFormat) - datetime.datetime.strptime(stop, datetimeFormat)
-        duration = abs(diff)
-        days, seconds = duration.days, duration.seconds
-        hours = int(seconds / 3600)
-        minutes = int((seconds % 3600)/60)
-        seconds = int(seconds % 60)
-        await event.respond(f"Succesfully finished sending {MessageCount} messages in {days} days, {hours} hours, {minutes} minutes and {seconds} seconds")
-        try:
-            status.remove("1")
-        except:
-            pass
-        try:
-            status.remove("2")
-        except:
-            pass
-
-
-@bot.on(events.CallbackQuery)
-async def handler(event):
     if event.data == b'video':
+        type = "Video"
         await event.delete()
+    if type:
         if not await is_sudo(event):
             await event.respond("You are not authorized to use this Bot. Create your own.")
             return
@@ -418,28 +141,41 @@ async def handler(event):
             async for message in client.iter_messages(fromchat, reverse=True):
                 if count:
                     if mcount:
-                        if media_type(message) == 'Video':
+                        if media_type(message) == type or type == 'All':
                             try:
-                                await client.send_message(tochat, message)
-                                try:
-                                  if len(str(message.message)) <= 95:
-                                    print("Succesfully forwarded: " + str(message.message))
-                                  else:
-                                    logmsg = str(message.message)
-                                    logmsg = logmsg[:95] + "..."
-                                    print("Succesfully forwarded: " + logmsg)
-                                except:
-                                  print("Unable to retrive data.")
-                                status.add("1")
-                                try:
-                                    status.remove("2")
-                                except:
-                                    pass
-                                await asyncio.sleep(2)
-                                mcount -= 1
-                                count -= 1
-                                MessageCount += 1
-                                await m.edit("Now Forwarding all videos.")
+                                if media_type(message) == 'Document':
+                                    await client.send_file(tochat, message.document)
+                                    try:
+                                        if len(str(message.file.name)) <= 95:
+                                            print("Succesfully forwarded: " + str(message.file.name))
+                                        else:
+                                            logmsg = str(message.file.name)
+                                            logmsg = logmsg[:95] + "..."
+                                            print("Succesfully forwarded: " + logmsg)
+                                    except:
+                                        print("Unable to retrive data.")
+                                else:
+                                    try:
+                                        await client.send_message(tochat, message)
+                                        try:
+                                            if len(str(message.message)) <= 95:
+                                                print("Succesfully forwarded: " + str(message.message))
+                                            else:
+                                                logmsg = str(message.message)
+                                                logmsg = logmsg[:95] + "..."
+                                                print("Succesfully forwarded: " + logmsg)
+                                        except:
+                                            print("Unable to retrive data.")
+                                        status.add("1")
+                                        try:
+                                            status.remove("2")
+                                        except:
+                                            pass
+                                        await asyncio.sleep(2)
+                                        mcount -= 1
+                                        count -= 1
+                                        MessageCount += 1
+                                await m.edit(f"Now Forwarding {type}.")
                             except:
                                 pass
                     else:
