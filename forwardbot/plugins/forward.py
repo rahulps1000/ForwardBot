@@ -175,7 +175,7 @@ async def handler(event):
                                         mcount -= 1
                                         count -= 1
                                         MessageCount += 1
-                                await m.edit(f"Now Forwarding {type}.")
+                                        await m.edit(f"Now Forwarding {type}.")
                             except:
                                 pass
                     else:
