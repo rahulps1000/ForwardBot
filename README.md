@@ -21,7 +21,7 @@ python -m forwardbot
 ```
 # Commands
 **Command :** ```/forward``` <br />
-**Usage :** Forwards any from the given channel to the chat where the command is executed. <br />
+**Usage :** Forwards all documents from the given channel to the chat where the command is executed. <br />
 **Command :** ```/count``` <br />
 **Usage :** Returns the Total message sent using the bot. <br />
 **Command :** ```/reset``` <br />
@@ -36,7 +36,6 @@ python -m forwardbot
 **Usage :** Check the status of Bot. <br />
 **Command :** ```/uptime``` <br />
 **Usage :** Check the uptime of bot. <br />
-    
 
 # Credits
 Special thanks to [Subinps](https://github.com/subinps) for Contributing to create this bot
