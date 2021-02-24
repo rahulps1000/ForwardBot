@@ -154,6 +154,16 @@ async def handler(event):
                                             print("Succesfully forwarded: " + logmsg)
                                     except:
                                         print("Unable to retrive data.")
+                                    status.add("1")
+                                        try:
+                                            status.remove("2")
+                                        except:
+                                            pass
+                                        await asyncio.sleep(2)
+                                        mcount -= 1
+                                        count -= 1
+                                        MessageCount += 1
+                                        await m.edit(f"Now Forwarding {type}.")
                                 else:
                                     try:
                                         await client.send_message(tochat, message)
