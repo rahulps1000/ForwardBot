@@ -53,8 +53,8 @@ async def handler(event):
             q = conv.wait_event(events.NewMessage(chats=event.chat_id))
             q = await q
             global offsetid
-            offsetid = p.message.message.strip()
-            if not p.is_reply:
+            offsetid = q.message.message.strip()
+            if not q.is_reply:
                 await conv.send_message("Please send the message as a reply to the message.")
             else:
                 break
