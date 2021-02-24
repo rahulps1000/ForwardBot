@@ -51,7 +51,7 @@ async def handler(event):
                 break
         while True:
             q = conv.wait_event(events.NewMessage(chats=event.chat_id))
-            q = await p
+            q = await q
             global offsetid
             offsetid = p.message.message.strip()
             if not p.is_reply:
