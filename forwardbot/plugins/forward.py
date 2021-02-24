@@ -38,20 +38,30 @@ async def handler(event):
                 await conv.send_message("Please send the message as a reply to the message.")
             else:
                 await conv.send_message("Okay now send me the channel id to where you want to forward messages as a reply to this message.")
-                while True:
-                    p = conv.wait_event(events.NewMessage(chats=event.chat_id))
-                    p = await p
-                    global tochannel
-                    tochannel = p.message.message.strip()
-                    if not p.is_reply:
-                        await conv.send_message("Please send the message as a reply to the message.")
-                    else:
-                        await event.respond('Select What you need to forward', buttons=[
-                            [Button.inline('All Messages', b'all'), Button.inline('Only Photos', b'photo')],
-                            [Button.inline('Only Documents', b'docs'), Button.inline(' Only Video' , b'video')]
-                            ])
-                        break
                 break
+        while True:
+            p = conv.wait_event(events.NewMessage(chats=event.chat_id))
+            p = await p
+            global tochannel
+            tochannel = p.message.message.strip()
+            if not p.is_reply:
+                await conv.send_message("Please send the message as a reply to the message.")
+            else:
+                await conv.send_message("Okay now send me the message id from where you want to start forwarding as a reply to this message.(0 if you want to forward from begining)")
+                break
+        while True:
+            q = conv.wait_event(events.NewMessage(chats=event.chat_id))
+            q = await p
+            global offsetid
+            offsetid = p.message.message.strip()
+            if not p.is_reply:
+                await conv.send_message("Please send the message as a reply to the message.")
+            else:
+                break
+        await event.respond('Select What you need to forward', buttons=[
+                    [Button.inline('All Messages', b'all'), Button.inline('Only Photos', b'photo')],
+                    [Button.inline('Only Documents', b'docs'), Button.inline(' Only Video' , b'video')]
+                    ])
 
 @forwardbot_cmd("reset", is_args=False)
 async def handler(event):
@@ -135,10 +145,13 @@ async def handler(event):
             count = 4507
             mcount = 1009
             global MessageCount
+            offset = int(offsetid)
+            if offset:
+                offset = offset-1
             print("Starting to forward")
             global start
             start = str(datetime.datetime.now())
-            async for message in client.iter_messages(fromchat, reverse=True):
+            async for message in client.iter_messages(fromchat, reverse=True, offset_id=offset):
                 if count:
                     if mcount:
                         if media_type(message) == type or type == 'All':
