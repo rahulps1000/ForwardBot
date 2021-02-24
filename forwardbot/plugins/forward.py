@@ -158,12 +158,14 @@ async def handler(event):
                                     try:
                                         await client.send_message(tochat, message)
                                         try:
-                                            if len(str(message.message)) <= 95:
-                                                print("Succesfully forwarded: " + str(message.message))
+                                            if len(str(message.message)) == 0:
+                                                logmsg = media_type(message)
+                                            elif len(str(message.message)) <= 95:
+                                                logmsg = str(message.message)
                                             else:
                                                 logmsg = str(message.message)
                                                 logmsg = logmsg[:95] + "..."
-                                                print("Succesfully forwarded: " + logmsg)
+                                            print("Succesfully forwarded: " + logmsg)
                                         except:
                                             print("Unable to retrive data.")
                                         status.add("1")
