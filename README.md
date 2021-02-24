@@ -34,9 +34,8 @@ python -m forwardbot
 **Usage :** Get the help of this bot. <br />
 **Command :** ```/status``` <br />
 **Usage :** Check the status of Bot. <br />
-    **Command :** ```/uptime``` <br />
-    **Usage :** Check the uptime of bot. <br />
-    
+**Command :** ```/uptime``` <br />
+**Usage :** Check the uptime of bot. <br />
 
 # Credits
 Special thanks to [Subinps](https://github.com/subinps) for Contributing to create this bot
