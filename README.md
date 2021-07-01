@@ -4,6 +4,7 @@
 <h1 align="center"><b>Forwarder Bot</b></h1>
 <h4 align="center">A Simple Forwarder Bot In Telethon TO Forward one Channel Contents to Another</h4>
 
+<h2 align="center">I will be soon releasing an update on this bot to make forwarding more easy. Stay Tuned and join [CodeXBotz](https://t.me/CodeXBotz) for further updates</h2>
 
 
 # Easy Way
@@ -11,7 +12,7 @@
 
 # Normal Way
 ```python3
-git clone https://github.com/rahulps100/ForwardBot
+git clone https://github.com/rahulps1000/ForwardBot
 cd ForwardBot
 pip install -r requirements.txt
 
@@ -21,7 +22,7 @@ python -m forwardbot
 ```
 # Commands
 **Command :** ```/forward``` <br />
-**Usage :** Forwards all documents from the given channel to the chat where the command is executed. <br />
+**Usage :** Forwards files from one channel to another. <br />
 **Command :** ```/count``` <br />
 **Usage :** Returns the Total message sent using the bot. <br />
 **Command :** ```/reset``` <br />
