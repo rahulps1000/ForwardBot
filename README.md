@@ -4,7 +4,7 @@
 <h1 align="center"><b>Forwarder Bot</b></h1>
 <h4 align="center">A Simple Forwarder Bot In Telethon TO Forward one Channel Contents to Another</h4>
 
-<h2 align="center">I will be soon releasing an update on this bot to make forwarding more easy. Stay Tuned and join [CodeXBotz](https://t.me/CodeXBotz) for further updates</h2>
+<h2 align="center">I will be soon releasing an update on this bot to make forwarding more easy. Stay Tuned and join [CodeXBotz](https://www.telegram.dog/codexbotz) for further updates</h2>
 
 
 # Easy Way
