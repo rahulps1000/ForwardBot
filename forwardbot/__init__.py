@@ -44,7 +44,7 @@ if Config.STRING_SESSION is None:
     logger.info("STRING_SESSION is None. Bot Is Quiting")
     sys.exit(1)
 if Config.SUDO_USERS is None:
-    logger.info("STRING_SESSION is None. Bot Is Quiting")
+    logger.info("SUDO_USERS is None. Bot Is Quiting")
     sys.exit(1)
 
 async def is_sudo(event):
